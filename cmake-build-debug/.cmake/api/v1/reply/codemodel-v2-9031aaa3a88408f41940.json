@@ -6,10 +6,9 @@
 			[
 				{
 					"build" : ".",
-					"jsonFile" : "directory-.-Debug-f5ebdc15457944623624.json",
 					"minimumCMakeVersion" : 
 					{
-						"string" : "3.21"
+						"string" : "3.17"
 					},
 					"projectIndex" : 0,
 					"source" : ".",
@@ -39,7 +38,7 @@
 				{
 					"directoryIndex" : 0,
 					"id" : "SubView::@6890427a1f51a3e7e1df",
-					"jsonFile" : "target-SubView-Debug-8eb193fd0738dd9d524d.json",
+					"jsonFile" : "target-SubView-Debug-f24e67b9f2c2edbfc37a.json",
 					"name" : "SubView",
 					"projectIndex" : 0
 				}
@@ -49,12 +48,12 @@
 	"kind" : "codemodel",
 	"paths" : 
 	{
-		"build" : "/Users/eliottgermain/CLionProjects/SubView/cmake-build-debug",
-		"source" : "/Users/eliottgermain/CLionProjects/SubView"
+		"build" : "/Users/mathieu/Desktop/SubView/cmake-build-debug",
+		"source" : "/Users/mathieu/Desktop/SubView"
 	},
 	"version" : 
 	{
 		"major" : 2,
-		"minor" : 3
+		"minor" : 0
 	}
 }
