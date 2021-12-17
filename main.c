@@ -30,6 +30,9 @@ void drawprimarypage(){
     struct tm *tm_struct = localtime(&now);
     int hour = tm_struct->tm_hour;
     int minute = tm_struct->tm_min;
+    char realtime[255];
+
+    sprintf(realtime, "%d:%d", hour, minute);
 
     char station[255] = "Nation";
     char Destination[255] = "La Défense";
@@ -61,7 +64,7 @@ void drawprimarypage(){
 
     al_draw_filled_rectangle(1500,105,1825,258,dark_grey); // time rectangle
 
-   al_draw_textf(led_font, al_map_rgb(253,204,75), 1510,120,0, "%d:%d", hour, minute); // time text
+   al_draw_textf(led_font, al_map_rgb(253,204,75), 1510,120,0, realtime); // time text
 
     al_draw_filled_rectangle(1086,386,1411,539,dark_grey); // 1st rectangle
 
