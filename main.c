@@ -11,6 +11,7 @@
 #include <allegro5/allegro_primitives.h>
 #include <allegro5/allegro_audio.h>
 #include <allegro5/allegro_acodec.h>
+#include <time.h>
 
 void erreur(const char*txt)
 {
@@ -20,11 +21,19 @@ void erreur(const char*txt)
     exit(EXIT_FAILURE);
 }
 
+
+
 void drawprimarypage(){
+
+
+    time_t now = time(NULL);
+    struct tm *tm_struct = localtime(&now);
+    int hour = tm_struct->tm_hour;
+    int minute = tm_struct->tm_min;
 
     char station[255] = "Nation";
     char Destination[255] = "La Défense";
-    char time[255] = "09:41";
+    // char realtime[255] = "15:38";
 
     ALLEGRO_FONT * Parisine_font_small = al_load_ttf_font("../Ressources/fonts/Parisine-Bold.otf",96,0);
     ALLEGRO_FONT * Parisine_font_big = al_load_ttf_font("../Ressources/fonts/Parisine-Bold.otf",135,0);
@@ -35,68 +44,40 @@ void drawprimarypage(){
     ALLEGRO_COLOR alternative_grey = al_map_rgb(188,188,188);
     ALLEGRO_BITMAP*metrologo;                // l'image
 
-    al_flip_display();
-    al_clear_to_color(al_map_rgb(255,255,255));
- //   al_draw_text(font, al_map_rgb(0,0,0), 0,0,0, "caca");
-
-
-
+    al_flip_display(); // go editing mode
+    al_clear_to_color(al_map_rgb(255,255,255)); // draw blank screen
     al_draw_filled_rectangle(50,50,1870,948,primary_grey);
-
 
     // charger une image dans le programme
     metrologo = al_load_bitmap("../Ressources/images/1.png");
     if(!metrologo)
         erreur("al_load_bitmap()");
-
     // puis l'afficher
-
     al_draw_bitmap(metrologo,120,86,0);
-
-
-
 
     al_draw_text(Parisine_font_small, al_map_rgb(22,75,156), 598,125,0, station); // station name
 
-
-
     al_draw_text(Parisine_font_big, al_map_rgb(22,75,156), 120,378,0, Destination); // destination name
-
-
 
     al_draw_filled_rectangle(1500,105,1825,258,dark_grey); // time rectangle
 
-
-
-    al_draw_text(led_font, al_map_rgb(253,204,75), 1510,120,0, time); // time text
-
-
+   al_draw_textf(led_font, al_map_rgb(253,204,75), 1510,120,0, "%d:%d", hour, minute); // time text
 
     al_draw_filled_rectangle(1086,386,1411,539,dark_grey); // 1st rectangle
 
-
-
     al_draw_filled_rectangle(1501,386,1826,539,dark_grey); // 2nd rectangle
-
-
 
     al_draw_filled_rectangle(1086,624,1412,777,dark_grey); // 3th rectangle
 
-
-
     al_draw_filled_rectangle(1501,624,1827,777,dark_grey); // 4th rectangle
-
-
 
     al_draw_filled_rectangle(121,341, 1827, 350, primary_blue); // blue line
 
-
-
     al_draw_filled_rectangle(50,813, 1256, 947, alternative_grey); // bottom left rectangle
-    al_flip_display();
 
 
 
+    al_flip_display(); // end editing mode
 
 
 }
@@ -148,9 +129,7 @@ int main(int argc, char *argv[])
     if(!al_install_keyboard())
         erreur("al_install_keyboard()");
 
-   //
    // End checking
-   //
 
 
     drawprimarypage();
@@ -174,8 +153,31 @@ int main(int argc, char *argv[])
     //
 
 
+
+
+  //  sprintf(compare, "something");
+
     // keyboard escape key detection
     while(!fin){
+
+        //
+        // GET REAL TIME AND DRAWING IT
+        //
+        time_t now = time(NULL);
+        struct tm *tm_struct = localtime(&now);
+        int hour = tm_struct->tm_hour;
+        int minute = tm_struct->tm_min;
+        int tmp;
+
+        if(tmp != minute){
+
+            printf("changement minute");
+            drawprimarypage();
+            tmp = tm_struct->tm_min;
+
+        }
+
+
 
         // récupération de l'état du clavier
         al_get_keyboard_state(&key);
