@@ -21,7 +21,26 @@ void erreur(const char*txt)
     exit(EXIT_FAILURE);
 }
 
+void drawtime(){
 
+
+    time_t now = time(NULL);
+    struct tm *tm_struct = localtime(&now);
+    int hour = tm_struct->tm_hour;
+    int minute = tm_struct->tm_min;
+
+    ALLEGRO_FONT * led_font = al_load_ttf_font("../Ressources/fonts/LED.otf",110,0);
+    ALLEGRO_COLOR dark_grey = al_map_rgb(70,70,70);
+
+    al_draw_filled_rectangle(1500,105,1825,258,dark_grey); // time rectangle
+
+    if(minute <= 9){
+        al_draw_textf(led_font, al_map_rgb(253,204,75), 1515,125,0, "%d:0%d", hour, minute); // time text case of only 1 digit
+    }  else al_draw_textf(led_font, al_map_rgb(253,204,75), 1515,125,0, "%d:%d", hour, minute); // time text
+
+
+
+}
 
 void drawprimarypage(){
 
@@ -62,9 +81,7 @@ void drawprimarypage(){
 
     al_draw_text(Parisine_font_big, al_map_rgb(22,75,156), 120,378,0, Destination); // destination name
 
-    al_draw_filled_rectangle(1500,105,1825,258,dark_grey); // time rectangle
-
-   al_draw_textf(led_font, al_map_rgb(253,204,75), 1510,120,0, realtime); // time text
+    drawtime();
 
     al_draw_filled_rectangle(1086,386,1411,539,dark_grey); // 1st rectangle
 
@@ -77,8 +94,6 @@ void drawprimarypage(){
     al_draw_filled_rectangle(121,341, 1827, 350, primary_blue); // blue line
 
     al_draw_filled_rectangle(50,813, 1256, 947, alternative_grey); // bottom left rectangle
-
-
 
     al_flip_display(); // end editing mode
 
@@ -164,7 +179,7 @@ int main(int argc, char *argv[])
     while(!fin){
 
         //
-        // GET REAL TIME AND DRAWING IT
+        // GET REAL TIME AND REDRAWING IT
         //
         time_t now = time(NULL);
         struct tm *tm_struct = localtime(&now);
@@ -173,11 +188,11 @@ int main(int argc, char *argv[])
         int tmp;
 
         if(tmp != minute){
-
             printf("changement minute");
-            drawprimarypage();
+            al_flip_display();
+            drawtime();
+            al_flip_display();
             tmp = tm_struct->tm_min;
-
         }
 
 
