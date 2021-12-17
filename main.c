@@ -35,13 +35,14 @@ void drawprimarypage(){
     ALLEGRO_COLOR alternative_grey = al_map_rgb(188,188,188);
     ALLEGRO_BITMAP*metrologo;                // l'image
 
-   al_clear_to_color(al_map_rgb(255,255,255));
- //   al_draw_text(font, al_map_rgb(0,0,0), 0,0,0, "caca");
-  al_flip_display();
-
-    al_flip_display(); // je sais pas pourquoi sans les deux flip cela ne marche pas
-    al_draw_filled_rectangle(50,50,1870,948,primary_grey);
     al_flip_display();
+    al_clear_to_color(al_map_rgb(255,255,255));
+ //   al_draw_text(font, al_map_rgb(0,0,0), 0,0,0, "caca");
+
+
+
+    al_draw_filled_rectangle(50,50,1870,948,primary_grey);
+
 
     // charger une image dans le programme
     metrologo = al_load_bitmap("../Ressources/images/1.png");
@@ -49,48 +50,48 @@ void drawprimarypage(){
         erreur("al_load_bitmap()");
 
     // puis l'afficher
-    al_flip_display();
+
     al_draw_bitmap(metrologo,120,86,0);
-    al_flip_display();
 
 
-    al_flip_display();
+
+
     al_draw_text(Parisine_font_small, al_map_rgb(22,75,156), 598,125,0, station); // station name
-    al_flip_display();
 
-    al_flip_display();
+
+
     al_draw_text(Parisine_font_big, al_map_rgb(22,75,156), 120,378,0, Destination); // destination name
-    al_flip_display();
 
-    al_flip_display();
+
+
     al_draw_filled_rectangle(1500,105,1825,258,dark_grey); // time rectangle
-    al_flip_display();
 
-    al_flip_display();
+
+
     al_draw_text(led_font, al_map_rgb(253,204,75), 1510,120,0, time); // time text
-    al_flip_display();
 
-    al_flip_display();
+
+
     al_draw_filled_rectangle(1086,386,1411,539,dark_grey); // 1st rectangle
-    al_flip_display();
 
-    al_flip_display();
+
+
     al_draw_filled_rectangle(1501,386,1826,539,dark_grey); // 2nd rectangle
-    al_flip_display();
 
-    al_flip_display();
+
+
     al_draw_filled_rectangle(1086,624,1412,777,dark_grey); // 3th rectangle
-    al_flip_display();
 
-    al_flip_display();
+
+
     al_draw_filled_rectangle(1501,624,1827,777,dark_grey); // 4th rectangle
-    al_flip_display();
 
-    al_flip_display();
+
+
     al_draw_filled_rectangle(121,341, 1827, 350, primary_blue); // blue line
-    al_flip_display();
 
-    al_flip_display();
+
+
     al_draw_filled_rectangle(50,813, 1256, 947, alternative_grey); // bottom left rectangle
     al_flip_display();
 
