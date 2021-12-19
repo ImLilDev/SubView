@@ -21,6 +21,10 @@ void erreur(const char*txt)
     exit(EXIT_FAILURE);
 }
 
+void drawButton(){
+
+}
+
 void drawtime(){
 
 
@@ -55,6 +59,8 @@ void drawprimarypage(){
 
     char station[255] = "Nation";
     char Destination[255] = "La Défense";
+    char stopButton[255] = "Stop";
+
     // char realtime[255] = "15:38";
 
     ALLEGRO_FONT * Parisine_font_small = al_load_ttf_font("../Ressources/fonts/Parisine-Bold.otf",96,0);
@@ -81,6 +87,8 @@ void drawprimarypage(){
 
     al_draw_text(Parisine_font_big, al_map_rgb(22,75,156), 120,378,0, Destination); // destination name
 
+
+
     drawtime();
 
     al_draw_filled_rectangle(1086,386,1411,539,dark_grey); // 1st rectangle
@@ -95,31 +103,34 @@ void drawprimarypage(){
 
     al_draw_filled_rectangle(50,813, 1256, 947, alternative_grey); // bottom left rectangle
 
+    al_draw_filled_rectangle(100, 830, 400, 930, primary_blue);                                            //
+                                                                                                                                // EXIT BUTTON
+    al_draw_text(Parisine_font_small, al_map_rgb(255,255,255), 140, 815, 0,stopButton);   //
+
     al_flip_display(); // end editing mode
 
-
 }
+
+
 
 
 int main(int argc, char *argv[])
 {
 
     int fin=0;
-
     al_init();
     al_init_font_addon();
     al_init_ttf_addon();
     al_install_audio();
     al_init_acodec_addon();
-
+    //al_set_new_display_flags(ALLEGRO_WINDOWED | ALLEGRO_RESIZABLE);
     ALLEGRO_DISPLAY * display = al_create_display(1920,1080);
     ALLEGRO_DISPLAY_MODE mode;
     ALLEGRO_FONT * font = al_load_ttf_font("test.TTF",64,0);
-    ALLEGRO_KEYBOARD_STATE key;        // clavier simple
+    ALLEGRO_KEYBOARD_STATE key;        // keyboard info
+    ALLEGRO_MOUSE_STATE mouse;      // mouse info
 
-
-
-  //      al_rest(10.0);
+   //      al_rest(10.0);
    //     al_destroy_display(display);
 
 
@@ -147,12 +158,14 @@ int main(int argc, char *argv[])
     if(!al_install_keyboard())
         erreur("al_install_keyboard()");
 
-   // End checking
+    // mouse check
+    if(!al_install_mouse())
+        erreur("al_install_mouse()");
+
+    // End checking
 
 
     drawprimarypage();
-
-
 
     //
     // Audio
@@ -205,6 +218,13 @@ int main(int argc, char *argv[])
             printf("esc key pressed");
             fin=1;
         };
+
+        al_get_mouse_state(&mouse);
+
+        if(100 < mouse.x && mouse.x < 400 && 830<mouse.y && mouse.y <930 && mouse.buttons &1 ){
+            printf("stop button pressed");
+            fin=1;
+        }
     };
 
 
