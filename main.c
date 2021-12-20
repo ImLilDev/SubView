@@ -63,7 +63,8 @@ void drawprimarypage(){
 
     // char realtime[255] = "15:38";
 
-    ALLEGRO_FONT * Parisine_font_small = al_load_ttf_font("../Ressources/fonts/Parisine-Bold.otf",96,0);
+    ALLEGRO_FONT * Parisine_font_small = al_load_ttf_font("../Ressources/fonts/Parisine-Bold.otf",64,0);
+    ALLEGRO_FONT * Parisine_font_medium = al_load_ttf_font("../Ressources/fonts/Parisine-Bold.otf",96,0);
     ALLEGRO_FONT * Parisine_font_big = al_load_ttf_font("../Ressources/fonts/Parisine-Bold.otf",135,0);
     ALLEGRO_FONT * led_font = al_load_ttf_font("../Ressources/fonts/LED.otf",120,0);
     ALLEGRO_COLOR primary_grey = al_map_rgb(240,240,240);
@@ -86,7 +87,7 @@ void drawprimarypage(){
     // puis l'afficher
     al_draw_bitmap(metrologo,120,86,0);
 
-    al_draw_text(Parisine_font_small, al_map_rgb(22,75,156), 598,125,0, station); // station name
+    al_draw_text(Parisine_font_medium, al_map_rgb(22,75,156), 598,125,0, station); // station name
 
     al_draw_text(Parisine_font_big, al_map_rgb(22,75,156), 120,378,0, Destination); // destination name
 
@@ -95,12 +96,20 @@ void drawprimarypage(){
     drawtime();
 
     al_draw_filled_rectangle(1086,386,1411,539,dark_grey); // 1st rectangle
+    al_draw_text(Parisine_font_small, al_map_rgb(255,255,255), 1263,439,0, "min"); // min text
+    al_draw_text(led_font, al_map_rgb(253,204,75), 1150,405,0, "0"); // time for next metro
 
     al_draw_filled_rectangle(1501,386,1826,539,dark_grey); // 2nd rectangle
+    al_draw_text(Parisine_font_small, al_map_rgb(255,255,255), 1676,439,0, "min"); // min text
+    al_draw_text(led_font, al_map_rgb(253,204,75), 1565,405,0, "2"); // time for 2nd metro
 
     al_draw_filled_rectangle(1086,624,1412,777,dark_grey); // 3th rectangle
+    al_draw_text(Parisine_font_small, al_map_rgb(255,255,255), 1263,666,0, "min"); // min text
+    al_draw_text(led_font, al_map_rgb(253,204,75), 1150,635,0, "6"); // time for 3th metro
 
     al_draw_filled_rectangle(1501,624,1827,777,dark_grey); // 4th rectangle
+    al_draw_text(Parisine_font_small, al_map_rgb(255,255,255), 1676,666,0, "min"); // min text
+    al_draw_text(led_font, al_map_rgb(253,204,75), 1565,635,0, "9"); // time for 4th metro
 
     al_draw_filled_rectangle(121,341, 1827, 350, primary_blue); // blue line
 
@@ -130,7 +139,7 @@ void drawprimarypage(){
 
 
     al_draw_filled_rectangle(100, 830, 400, 930, primary_blue);                                                 // EXIT BUTTON
-    al_draw_text(Parisine_font_small, al_map_rgb(255,255,255), 140, 815, 0,stopButton);            //
+    al_draw_text(Parisine_font_medium, al_map_rgb(255,255,255), 140, 815, 0,stopButton);            //
 
     al_flip_display(); // end editing mode
 
