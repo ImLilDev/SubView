@@ -45,6 +45,8 @@
 				<Option compiler="gcc"/>
 				<Compiler>
 					<Add directory="/usr/local/Cellar/allegro/5.2.7.0/include"/>
+					<Add directory="/usr/local/Cellar/curl/7.80.0_1/include"/>
+					<Add directory="/usr/local/Cellar/json-c/0.15/include"/>
 					<Add directory="/usr/local/include"/>
 					<Add directory="/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/clang/13.0.0/include"/>
 					<Add directory="/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include"/>
@@ -66,6 +68,8 @@
 				<Option compiler="gcc"/>
 				<Compiler>
 					<Add directory="/usr/local/Cellar/allegro/5.2.7.0/include"/>
+					<Add directory="/usr/local/Cellar/curl/7.80.0_1/include"/>
+					<Add directory="/usr/local/Cellar/json-c/0.15/include"/>
 					<Add directory="/usr/local/include"/>
 					<Add directory="/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/clang/13.0.0/include"/>
 					<Add directory="/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include"/>

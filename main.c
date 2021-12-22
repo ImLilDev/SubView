@@ -12,6 +12,10 @@
 #include <allegro5/allegro_audio.h>
 #include <allegro5/allegro_acodec.h>
 #include <time.h>
+#include <curl/curl.h>
+#include <curl/easy.h>
+#include <string.h>
+#include <json-c/json.h>
 
 void erreur(const char*txt)
 {
@@ -21,7 +25,49 @@ void erreur(const char*txt)
     exit(EXIT_FAILURE);
 }
 
-void drawButton(){
+void drawscheldures(){
+
+
+    // get reponse from the API and storing it into result.json
+    CURL *curl;
+    FILE *fp;
+    CURLcode res;
+    char *url = "https://api-ratp.pierre-grimaud.fr/v4/schedules/metros/1/berault/A";
+    char outfilename[FILENAME_MAX] = "result.json";
+    curl = curl_easy_init();
+    if (curl) {
+        fp = fopen(outfilename,"wb");
+        curl_easy_setopt(curl, CURLOPT_URL, url);
+        curl_easy_setopt(curl, CURLOPT_WRITEDATA, fp);
+        res = curl_easy_perform(curl);
+        /* always cleanup */
+        curl_easy_cleanup(curl);
+        fclose(fp);
+    }
+    // end : stored into result.json
+
+
+    // ici algo qui extrait le resultat de la key "message"
+    // avec json-c le stock, edit le fichier et recommence
+    // pour avoir la deuxième puis la 2ème puis 3ème puis
+    // la 4ème.
+
+    // au final 4 variable schudure1, schudure2, schudure3, schudure4
+    // WIP
+
+    FILE *fp2;
+    char buffer[1024];
+    struct json_object *parsed_json;
+    struct json_object *message;
+
+    fp2 = fopen("result.json","r");
+    fread(buffer, 1024, 1, fp);
+    fclose(fp2);
+
+    parsed_json = json_tokener_parse(buffer);
+
+    json_object_object_get_ex(parsed_json, "message", &message);
+    printf("Message: %s\n", json_object_get_string(message));
 
 }
 
@@ -140,6 +186,8 @@ void drawprimarypage(){
 
     al_draw_filled_rectangle(100, 830, 400, 930, primary_blue);                                                 // EXIT BUTTON
     al_draw_text(Parisine_font_medium, al_map_rgb(255,255,255), 140, 815, 0,stopButton);            //
+
+    drawscheldures();
 
     al_flip_display(); // end editing mode
 
