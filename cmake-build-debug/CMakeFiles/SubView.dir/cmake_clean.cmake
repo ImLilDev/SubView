@@ -1,4 +1,6 @@
 file(REMOVE_RECURSE
+  "CMakeFiles/SubView.dir/list.c.o"
+  "CMakeFiles/SubView.dir/list.c.o.d"
   "CMakeFiles/SubView.dir/main.c.o"
   "CMakeFiles/SubView.dir/main.c.o.d"
   "SubView"

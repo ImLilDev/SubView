@@ -8,7 +8,12 @@
 #include <stdlib.h>
 #include "struct.h"
 
-typedef struct node {       // elements of the struct will be different stations
+typedef enum{
+   false,
+   true
+}bool;
+
+typedef struct node {       // elements of the struct will be the different stations
     station _station;
     struct node * nextNode;
 
@@ -18,46 +23,13 @@ typedef struct list {       // list of stations
     node *first;
 }list;
 
-list *listInitialisation(){
-    list *_list = malloc(sizeof(*_list));
-    node *_node = malloc(sizeof(*_node));
+ /// prototypes
 
-    if (_list == NULL || _node == NULL ){
-        EXIT_FAILURE;
-    }
+list *listInitialisation();
+int listLength(list *_list );
+void startInsertion(list *_list, station _inputStation);
+void listDisplay(list *_list);
+bool isEmpty(list *_list);
 
-    _node->_station;            // trouver le bon truc a initialiser, pour l'instant ????
-    _node->nextNode = NULL;
-    _list->first = _node;
-
-    return _list;
-}
-
-void startInsertion(list *_list, station _inputStation){
-    // new station creation //
-    node *newStation = malloc(sizeof(*newStation));
-    if(_list == NULL || newStation == NULL){
-        EXIT_FAILURE;
-    }
-    newStation->_station = _inputStation;
-
-    // new station insertion //
-    newStation->nextNode = _list->first;
-    _list->first = newStation;
-
-}
-
-void listDisplay(list *_list){
-    if(_list == NULL){
-        EXIT_FAILURE;
-    }
-
-    node * current = _list->first;
-
-    while(current != NULL){
-        printf("%s\n" , current->_station.stationName);
-        current = current->nextNode;
-    }
-}
 
 #endif //SUBVIEW_LIST_H

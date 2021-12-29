@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include "list.h"
 #include "struct.h"
+#include <string.h>
 
 void duplicateFile(char *file, char *copy){
     FILE *fp = fopen(file , "r+");
@@ -16,7 +17,6 @@ void duplicateFile(char *file, char *copy){
         }
         fputc(fgetc(fp),cp);
     }
-
 
     fclose(fp);
     fclose(cp);
@@ -42,9 +42,16 @@ void suppr(char *file, char *copy){
 }
 
 int main() {
-    duplicateFile("test.json", "formated.json");
+
+    station testStation;
+    strcpy(testStation.stationName, "Charles de Gaulle ");
+    list *test = listInitialisation();
+    startInsertion(test, testStation);
+    listDisplay(test);
+
+    /*duplicateFile("test.json", "formated.json");
     remove("test.json");
     rename("formated.json" , "test.json");
-    suppr("test.json", "formated.json");
+    suppr("test.json", "formated.json");*/
     return 0;
 }

@@ -8,6 +8,7 @@ set(CMAKE_DEPENDS_LANGUAGES
 
 # The set of dependency files which are needed:
 set(CMAKE_DEPENDS_DEPENDENCY_FILES
+  "/Users/eliottgermain/CLionProjects/SubView/list.c" "CMakeFiles/SubView.dir/list.c.o" "gcc" "CMakeFiles/SubView.dir/list.c.o.d"
   "/Users/eliottgermain/CLionProjects/SubView/main.c" "CMakeFiles/SubView.dir/main.c.o" "gcc" "CMakeFiles/SubView.dir/main.c.o.d"
   )
 

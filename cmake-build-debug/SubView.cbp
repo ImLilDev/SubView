@@ -76,6 +76,9 @@
 				</MakeCommands>
 			</Target>
 		</Build>
+		<Unit filename="/Users/eliottgermain/CLionProjects/SubView/list.c">
+			<Option target="SubView"/>
+		</Unit>
 		<Unit filename="/Users/eliottgermain/CLionProjects/SubView/list.h">
 			<Option target="SubView"/>
 		</Unit>

@@ -81,12 +81,12 @@ clean: CMakeFiles/SubView.dir/clean
 CMakeFiles/SubView.dir/all:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/SubView.dir/build.make CMakeFiles/SubView.dir/depend
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/SubView.dir/build.make CMakeFiles/SubView.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/Users/eliottgermain/CLionProjects/SubView/cmake-build-debug/CMakeFiles --progress-num=1,2 "Built target SubView"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/Users/eliottgermain/CLionProjects/SubView/cmake-build-debug/CMakeFiles --progress-num=1,2,3 "Built target SubView"
 .PHONY : CMakeFiles/SubView.dir/all
 
 # Build rule for subdir invocation for target.
 CMakeFiles/SubView.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /Users/eliottgermain/CLionProjects/SubView/cmake-build-debug/CMakeFiles 2
+	$(CMAKE_COMMAND) -E cmake_progress_start /Users/eliottgermain/CLionProjects/SubView/cmake-build-debug/CMakeFiles 3
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 CMakeFiles/SubView.dir/all
 	$(CMAKE_COMMAND) -E cmake_progress_start /Users/eliottgermain/CLionProjects/SubView/cmake-build-debug/CMakeFiles 0
 .PHONY : CMakeFiles/SubView.dir/rule
