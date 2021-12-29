@@ -1,4 +1,7 @@
 #include <stdio.h>
+#include <stdlib.h>
+#include "list.h"
+#include "struct.h"
 
 void duplicateFile(char *file, char *copy){
     FILE *fp = fopen(file , "r+");
