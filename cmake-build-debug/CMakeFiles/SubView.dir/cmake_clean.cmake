@@ -1,5 +1,6 @@
 file(REMOVE_RECURSE
   "CMakeFiles/SubView.dir/main.c.o"
+  "CMakeFiles/SubView.dir/main.c.o.d"
   "SubView"
   "SubView.pdb"
 )
