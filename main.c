@@ -16,6 +16,7 @@
 #include <curl/easy.h>
 #include <string.h>
 #include <json-c/json.h>
+#include "struct.h"
 
 void erreur(const char*txt)
 {
@@ -25,50 +26,48 @@ void erreur(const char*txt)
     exit(EXIT_FAILURE);
 }
 
+
+
+void drawTrainTime(int time, float x1, float y1, float x2, float y2, float x, float y){ // to avoid code repetition
+
+
+    ALLEGRO_FONT * led_font = al_load_ttf_font("../Ressources/fonts/LED.otf",120,0);
+    ALLEGRO_COLOR dark_grey = al_map_rgb(70,70,70);
+    if(time > 9){
+        x = x - 130;
+    }
+
+    al_draw_filled_rectangle(x1,y1,x2,y2,dark_grey); // 1st rectangle
+    al_draw_textf(led_font, al_map_rgb(253,204,75), x , y ,0,"%d",  time); // time for next metro
+    al_flip_display();
+}
+
 void drawscheldures(){
 
+    station _station = creatStation();
 
-    // get reponse from the API and storing it into result.json
-    CURL *curl;
-    FILE *fp;
-    CURLcode res;
-    char *url = "https://api-ratp.pierre-grimaud.fr/v4/schedules/metros/1/berault/A";
-    char outfilename[FILENAME_MAX] = "result.json";
-    curl = curl_easy_init();
-    if (curl) {
-        fp = fopen(outfilename,"wb");
-        curl_easy_setopt(curl, CURLOPT_URL, url);
-        curl_easy_setopt(curl, CURLOPT_WRITEDATA, fp);
-        res = curl_easy_perform(curl);
-        /* always cleanup */
-        curl_easy_cleanup(curl);
-        fclose(fp);
-    }
-    // end : stored into result.json
+    ///                   console test                 ///
 
-
-    // ici algo qui extrait le resultat de la key "message"
-    // avec json-c le stock, edit le fichier et recommence
-    // pour avoir la deuxième puis la 2ème puis 3ème puis
-    // la 4ème.
-
-    // au final 4 variable schudure1, schudure2, schudure3, schudure4
-    // WIP
-
-    FILE *fp2;
-    char buffer[1024];
-    struct json_object *parsed_json;
-    struct json_object *message;
-
-    fp2 = fopen("result.json","r");
-    fread(buffer, 1024, 1, fp);
-    fclose(fp2);
-
-    parsed_json = json_tokener_parse(buffer);
-
-    json_object_object_get_ex(parsed_json, "message", &message);
-    printf("Message: %s\n", json_object_get_string(message));
-
+    printf("%s %d\n","time1 : ", _station.timeNextTrain1);
+    printf("%s %d\n","time2 : ", _station.timeNextTrain2);
+    printf("%s %d\n","time3 : ", _station.timeNextTrain3);
+    printf("%s %d\n","time4 : ", _station.timeNextTrain4);
+    //printf("%s %s\n","station name : ", _station.stationName );
+    printf("%s %s\n","station destination : ", _station.destination );
+    ///                     display                    ///
+    ALLEGRO_FONT * Parisine_font_small = al_load_ttf_font("../Ressources/fonts/Parisine-Bold.otf",64,0);
+    ALLEGRO_FONT * Parisine_font_big = al_load_ttf_font("../Ressources/fonts/Parisine-Bold.otf",135,0);
+    al_flip_display();
+    drawTrainTime(_station.timeNextTrain1,1086, 386, 1411,539,1150,405);
+    drawTrainTime(_station.timeNextTrain2,1501,386, 1826,539, 1565, 405);
+    drawTrainTime(_station.timeNextTrain3,1086,624, 1412,777,1150,635);
+    drawTrainTime(_station.timeNextTrain4,1501,624, 1826,777,1565,635);
+    al_draw_text(Parisine_font_small, al_map_rgb(255,255,255), 1263,439,0, "min"); // min text
+    al_draw_text(Parisine_font_small, al_map_rgb(255,255,255), 1676,439,0, "min"); // min text
+    al_draw_text(Parisine_font_small, al_map_rgb(255,255,255), 1263,666,0, "min"); // min text
+    al_draw_text(Parisine_font_small, al_map_rgb(255,255,255), 1676,666,0, "min"); // min text
+    al_draw_text(Parisine_font_big, al_map_rgb(22,75,156), 120,378,0, _station.destination); // destination name
+    al_flip_display();
 }
 
 void drawtime(){
@@ -104,14 +103,14 @@ void drawprimarypage(){
     sprintf(realtime, "%d:%d", hour, minute);
 
     char station[255] = "Nation️";
-    char Destination[255] = "La Défense";
+
     char stopButton[255] = "Stop";
 
     // char realtime[255] = "15:38";
 
     ALLEGRO_FONT * Parisine_font_small = al_load_ttf_font("../Ressources/fonts/Parisine-Bold.otf",64,0);
     ALLEGRO_FONT * Parisine_font_medium = al_load_ttf_font("../Ressources/fonts/Parisine-Bold.otf",96,0);
-    ALLEGRO_FONT * Parisine_font_big = al_load_ttf_font("../Ressources/fonts/Parisine-Bold.otf",135,0);
+
     ALLEGRO_FONT * led_font = al_load_ttf_font("../Ressources/fonts/LED.otf",120,0);
     ALLEGRO_COLOR primary_grey = al_map_rgb(240,240,240);
     ALLEGRO_COLOR dark_grey = al_map_rgb(70,70,70);
@@ -135,27 +134,12 @@ void drawprimarypage(){
 
     al_draw_text(Parisine_font_medium, al_map_rgb(22,75,156), 598,125,0, station); // station name
 
-    al_draw_text(Parisine_font_big, al_map_rgb(22,75,156), 120,378,0, Destination); // destination name
+
 
 
 
     drawtime();
-
-    al_draw_filled_rectangle(1086,386,1411,539,dark_grey); // 1st rectangle
-    al_draw_text(Parisine_font_small, al_map_rgb(255,255,255), 1263,439,0, "min"); // min text
-    al_draw_text(led_font, al_map_rgb(253,204,75), 1150,405,0, "0"); // time for next metro
-
-    al_draw_filled_rectangle(1501,386,1826,539,dark_grey); // 2nd rectangle
-    al_draw_text(Parisine_font_small, al_map_rgb(255,255,255), 1676,439,0, "min"); // min text
-    al_draw_text(led_font, al_map_rgb(253,204,75), 1565,405,0, "2"); // time for 2nd metro
-
-    al_draw_filled_rectangle(1086,624,1412,777,dark_grey); // 3th rectangle
-    al_draw_text(Parisine_font_small, al_map_rgb(255,255,255), 1263,666,0, "min"); // min text
-    al_draw_text(led_font, al_map_rgb(253,204,75), 1150,635,0, "6"); // time for 3th metro
-
-    al_draw_filled_rectangle(1501,624,1827,777,dark_grey); // 4th rectangle
-    al_draw_text(Parisine_font_small, al_map_rgb(255,255,255), 1676,666,0, "min"); // min text
-    al_draw_text(led_font, al_map_rgb(253,204,75), 1565,635,0, "9"); // time for 4th metro
+    
 
     al_draw_filled_rectangle(121,341, 1827, 350, primary_blue); // blue line
 
@@ -190,7 +174,7 @@ void drawprimarypage(){
     drawscheldures();
 
     al_flip_display(); // end editing mode
-
+    drawscheldures();
 }
 
 
@@ -322,8 +306,6 @@ int main(int argc, char *argv[])
             printf("fav button pressed");
             fin=1;
         }
-
-
 
     };
 
