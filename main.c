@@ -39,7 +39,6 @@ void drawTrainTime(int time, float x1, float y1, float x2, float y2, float x, fl
 
     al_draw_filled_rectangle(x1,y1,x2,y2,dark_grey); // 1st rectangle
     al_draw_textf(led_font, al_map_rgb(253,204,75), x , y ,0,"%d",  time); // time for next metro
-    al_flip_display();
 }
 
 void drawscheldures(){
@@ -57,7 +56,6 @@ void drawscheldures(){
     ///                     display                    ///
     ALLEGRO_FONT * Parisine_font_small = al_load_ttf_font("../Ressources/fonts/Parisine-Bold.otf",64,0);
     ALLEGRO_FONT * Parisine_font_big = al_load_ttf_font("../Ressources/fonts/Parisine-Bold.otf",135,0);
-    al_flip_display();
     drawTrainTime(_station.timeNextTrain1,1086, 386, 1411,539,1150,405);
     drawTrainTime(_station.timeNextTrain2,1501,386, 1826,539, 1565, 405);
     drawTrainTime(_station.timeNextTrain3,1086,624, 1412,777,1150,635);
@@ -67,7 +65,6 @@ void drawscheldures(){
     al_draw_text(Parisine_font_small, al_map_rgb(255,255,255), 1263,666,0, "min"); // min text
     al_draw_text(Parisine_font_small, al_map_rgb(255,255,255), 1676,666,0, "min"); // min text
     al_draw_text(Parisine_font_big, al_map_rgb(22,75,156), 120,378,0, _station.destination); // destination name
-    al_flip_display();
 }
 
 void drawtime(){
@@ -86,7 +83,6 @@ void drawtime(){
     if(minute <= 9){
         al_draw_textf(led_font, al_map_rgb(253,204,75), 1515,125,0, "%d:0%d", hour, minute); // time text case of only 1 digit
     }  else al_draw_textf(led_font, al_map_rgb(253,204,75), 1515,125,0, "%d:%d", hour, minute); // time text
-
 
 
 }
@@ -135,9 +131,6 @@ void drawprimarypage(){
     al_draw_text(Parisine_font_medium, al_map_rgb(22,75,156), 598,125,0, station); // station name
 
 
-
-
-
     drawtime();
     
 
@@ -174,7 +167,6 @@ void drawprimarypage(){
     drawscheldures();
 
     al_flip_display(); // end editing mode
-    drawscheldures();
 }
 
 
