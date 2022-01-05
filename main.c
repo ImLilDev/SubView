@@ -26,6 +26,29 @@ void erreur(const char*txt)
     exit(EXIT_FAILURE);
 }
 
+/*void readConfigFile(station  _station){
+
+    FILE * configFile = fopen("config.txt", "r");
+    if(configFile == NULL){
+        printf("File not open");
+    }else
+    {
+        printf("File  open");
+        while(feof(configFile) == 0)
+        {
+            if(fgetc(configFile) == 'S')
+                fscanf(configFile, "%s %s","station", _station.stationName);
+            if(fgetc(configFile) == 'L')
+                fscanf(configFile, "%s %d","Line", _station->metroNumber);
+            if(fgetc(configFile) == 'D')
+                fscanf(configFile, "%s %c","Direction", _station->direction);*/
+        /*}
+        printf("end of file");
+    }
+
+
+}*/
+
 
 
 void drawTrainTime(int time, float x1, float y1, float x2, float y2, float x, float y){ // to avoid code repetition
@@ -34,7 +57,7 @@ void drawTrainTime(int time, float x1, float y1, float x2, float y2, float x, fl
     ALLEGRO_FONT * led_font = al_load_ttf_font("../Ressources/fonts/LED.otf",120,0);
     ALLEGRO_COLOR dark_grey = al_map_rgb(70,70,70);
     if(time > 9){
-        x = x - 130;
+        x = x - 30;
     }
 
     al_draw_filled_rectangle(x1,y1,x2,y2,dark_grey); // 1st rectangle
@@ -44,6 +67,7 @@ void drawTrainTime(int time, float x1, float y1, float x2, float y2, float x, fl
 void drawscheldures(){
 
     station _station = creatStation();
+    //readConfigFile(_station);
 
     ///                   console test                 ///
 
@@ -51,6 +75,9 @@ void drawscheldures(){
     printf("%s %d\n","time2 : ", _station.timeNextTrain2);
     printf("%s %d\n","time3 : ", _station.timeNextTrain3);
     printf("%s %d\n","time4 : ", _station.timeNextTrain4);
+    //printf("%s %s\n", "station Name : ", _station.stationName);
+    //printf("%s %d\n", "Line  : ", _station.metroNumber);
+    //printf("%s %d\n", "Direction", _station.direction);
     //printf("%s %s\n","station name : ", _station.stationName );
     printf("%s %s\n","station destination : ", _station.destination );
     ///                     display                    ///
@@ -256,7 +283,19 @@ int main(int argc, char *argv[])
         struct tm *tm_struct = localtime(&now);
         int hour = tm_struct->tm_hour;
         int minute = tm_struct->tm_min;
+        int sec = tm_struct->tm_sec;
         int tmp;
+        int tmp2;
+
+        if(sec >= tmp2+5){
+            printf("plus de 5 second sont passé");
+            al_flip_display();
+            drawscheldures();
+            al_flip_display();
+            tmp = tm_struct->tm_min;
+            tmp2 = tm_struct->tm_sec;
+        }
+
 
         if(tmp != minute){
             printf("changement minute");
@@ -264,6 +303,7 @@ int main(int argc, char *argv[])
             drawtime();
             al_flip_display();
             tmp = tm_struct->tm_min;
+            tmp2 = tm_struct->tm_sec;
         }
 
 

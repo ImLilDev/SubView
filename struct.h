@@ -19,8 +19,8 @@ typedef struct station {
     int timeNextTrain3;
     int timeNextTrain4;
     int metroNumber;
-    char * destination;
-    char * direction;
+    const char * destination;
+    char direction;
 } station;
 
 typedef struct line {
@@ -131,7 +131,7 @@ int recupTime(FILE* fp){
     return stationName;
 }*/
 
-char * getDestination(FILE* fp){
+const char * getDestination(FILE* fp){
 
     const char * destinationTrain;
     FILE *fp2;
@@ -145,8 +145,18 @@ char * getDestination(FILE* fp){
     json_object_object_get_ex(parsed_json, "destination", &destination);
     printf("%s\n", json_object_get_string(destination));
     destinationTrain = json_object_get_string(destination);
-    if(strcmp(destinationTrain, "La Defense (Grande arche)") != 0){
+    if (strcmp(destinationTrain, "Chateau de Vincennes") <= 0){
+        destinationTrain = "Ch. Vincennes";
+        return destinationTrain;
+    }
+    if(strcmp(destinationTrain, "La Defense (Grande arche)") <= 0){
         destinationTrain = "La Defense";
+        return destinationTrain;
+    }
+
+    if(strcmp(destinationTrain, "Pont de Levallois-Becon") <= 0){
+        destinationTrain = "Pt. Levallois-B";
+        return destinationTrain;
     }
 
     return destinationTrain;
@@ -157,7 +167,7 @@ station creatStation(){
     CURL *curl;
     FILE *fp;
     CURLcode res;
-    char *url = "https://api-ratp.pierre-grimaud.fr/v4/schedules/metros/1/berault/A";
+    char *url = "https://api-ratp.pierre-grimaud.fr/v4/schedules/metros/1/berault/R";
     char outfilename[FILENAME_MAX] = "result.json";
     curl = curl_easy_init();
     if(curl) {
