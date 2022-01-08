@@ -122,8 +122,6 @@ void drawprimarypage(){
 
     char station[255] = "Nation️";
 
-    char stopButton[255] = "Stop";
-
     // char realtime[255] = "15:38";
 
     ALLEGRO_FONT * Parisine_font_small = al_load_ttf_font("../Ressources/fonts/Parisine-Bold.otf",64,0);
@@ -174,10 +172,6 @@ void drawprimarypage(){
     RATP = al_load_bitmap("../Ressources/images/RATP.png"); // logo RATP
     al_draw_bitmap(RATP,1727,820,0);
 
-
-    al_draw_filled_rectangle(100, 830, 400, 930, primary_blue);                                                 // EXIT BUTTON
-    al_draw_text(Parisine_font_medium, al_map_rgb(255,255,255), 140, 815, 0,stopButton);            //
-
     drawscheldures();
 
     al_flip_display(); // end editing mode
@@ -225,8 +219,18 @@ void changemetro(){
 
             if (strcmp(key, "Line") == 0){
                 if(data == 14){
-                    fseek(configFile,-1,SEEK_CUR);
+                    fseek(configFile,-2,SEEK_CUR);
                     data = 1;
+                    fprintf(configFile,"%d ",data);
+                }
+                else if(data == 9){
+                    fseek(configFile,-1,SEEK_CUR);
+                    data = 10;
+                    fprintf(configFile,"%d", data);
+                }
+                else if(data >= 10){
+                    fseek(configFile,-2,SEEK_CUR);
+                    data++;
                     fprintf(configFile,"%d", data);
                 }
                 else{
@@ -378,12 +382,8 @@ al_flip_display();
 
         if(120 < mouse.x && mouse.x < 509 && 86<mouse.y && mouse.y <277 && mouse.buttons &1 ){ // clic on metro logo
             printf("clic on metro logo");
+            al_rest(1.0);
             changemetro();
-        }
-
-        if(100 < mouse.x && mouse.x < 400 && 830<mouse.y && mouse.y <930 && mouse.buttons &1 ){ // clic on exit button
-            printf("stop button pressed");
-            fin=1;
         }
 
         if(20 < mouse.x && mouse.x < 129 && 957<mouse.y && mouse.y <1066 && mouse.buttons &1 ){ // clic on add rectangle ?
