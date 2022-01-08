@@ -1,11 +1,6 @@
 //
 // Created by Eliott GERMAIN on 29/12/2021.
 //
-#include <curl/curl.h>
-#include <curl/easy.h>
-#include <string.h>
-#include <json-c/json.h>
-
 #ifndef SUBVIEW_STRUCT_H
 #define SUBVIEW_STRUCT_H
 #include <stdio.h>
@@ -13,14 +8,14 @@
 #include <json-c/json.h>
 
 typedef struct station {
-    char * stationName;
+    char stationName[255];
     int timeNextTrain1;
     int timeNextTrain2;
     int timeNextTrain3;
     int timeNextTrain4;
     int metroNumber;
     const char * destination;
-    char direction;
+    char direction[1];
 } station;
 
 typedef struct line {
@@ -179,6 +174,8 @@ station creatStation(){
         curl_easy_cleanup(curl);
         fclose(fp);
     }
+
+
     formatFile("result.json");
     station _station;
     _station.destination = getDestination(fp);
@@ -194,10 +191,10 @@ station creatStation(){
     return _station;
 }
 
-station creatStation();
 
-void formatFile(char *file);
-void suppr(char *file);
+
+
+
 int recupDest(char * _file);
 
 #endif //SUBVIEW_STRUCT_H

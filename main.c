@@ -18,6 +18,7 @@
 #include <json-c/json.h>
 #include "struct.h"
 
+
 void erreur(const char*txt)
 {
     ALLEGRO_DISPLAY*d;
@@ -26,28 +27,36 @@ void erreur(const char*txt)
     exit(EXIT_FAILURE);
 }
 
-/*void readConfigFile(station  _station){
+
+
+void readConfigFile(station * _station){
 
     FILE * configFile = fopen("config.txt", "r");
+    char data[255];
+    char key[255];
+    int i =0;
     if(configFile == NULL){
         printf("File not open");
     }else
     {
-        printf("File  open");
-        while(feof(configFile) == 0)
-        {
-            if(fgetc(configFile) == 'S')
-                fscanf(configFile, "%s %s","station", _station.stationName);
-            if(fgetc(configFile) == 'L')
-                fscanf(configFile, "%s %d","Line", _station->metroNumber);
-            if(fgetc(configFile) == 'D')
-                fscanf(configFile, "%s %c","Direction", _station->direction);*/
-        /*}
-        printf("end of file");
+        while(fscanf(configFile,"%s %s",key, data) != EOF){
+
+            if(strcmp( key, "station" ) == 0){
+                strcpy(_station->stationName , data);
+                printf("station name from file : %s\n" ,_station->stationName);
+            }
+            if(strcmp(key, "Direction")==0){
+                strcpy( _station->direction, data);
+            }
+            if(strcmp(key, "Line")==0){
+                _station->metroNumber = atoi(data);
+            }
+        }
+        printf("station name from file after while() : %s\n" , _station->stationName );
+        printf("end of file\n");
     }
-
-
-}*/
+    fclose(configFile);
+}
 
 
 
@@ -66,8 +75,8 @@ void drawTrainTime(int time, float x1, float y1, float x2, float y2, float x, fl
 
 void drawscheldures(){
 
-    station _station = creatStation();
-    //readConfigFile(_station);
+    station  _station = creatStation();
+    readConfigFile( &_station);
 
     ///                   console test                 ///
 
@@ -75,11 +84,10 @@ void drawscheldures(){
     printf("%s %d\n","time2 : ", _station.timeNextTrain2);
     printf("%s %d\n","time3 : ", _station.timeNextTrain3);
     printf("%s %d\n","time4 : ", _station.timeNextTrain4);
-    //printf("%s %s\n", "station Name : ", _station.stationName);
-    //printf("%s %d\n", "Line  : ", _station.metroNumber);
-    //printf("%s %d\n", "Direction", _station.direction);
-    //printf("%s %s\n","station name : ", _station.stationName );
-    printf("%s %s\n","station destination : ", _station.destination );
+    printf("%s %s\n", "station Name : ", _station.stationName);
+    printf("%s %d\n", "Line  : ", _station.metroNumber);
+    printf("%s %s\n", "Direction : ", _station.direction);
+
     ///                     display                    ///
     ALLEGRO_FONT * Parisine_font_small = al_load_ttf_font("../Ressources/fonts/Parisine-Bold.otf",64,0);
     ALLEGRO_FONT * Parisine_font_big = al_load_ttf_font("../Ressources/fonts/Parisine-Bold.otf",135,0);
@@ -214,7 +222,8 @@ int main(int argc, char *argv[])
     ALLEGRO_FONT * font = al_load_ttf_font("test.TTF",64,0);
     ALLEGRO_KEYBOARD_STATE key;        // keyboard info
     ALLEGRO_MOUSE_STATE mouse;      // mouse info
-
+    station station1;
+    readConfigFile(&station1);
    //      al_rest(10.0);
    //     al_destroy_display(display);
 
@@ -290,7 +299,8 @@ int main(int argc, char *argv[])
         if(sec >= tmp2+5){
             printf("plus de 5 second sont passé");
             al_flip_display();
-            drawscheldures();
+            //drawscheldures();
+            drawprimarypage();
             al_flip_display();
             tmp = tm_struct->tm_min;
             tmp2 = tm_struct->tm_sec;
