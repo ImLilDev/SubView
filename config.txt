@@ -1,0 +1,8 @@
+[DEFAULT STATION]									
+station nation
+Line 1
+Direction A
+
+[SCEEN SETTINGS]
+RefreshRate 5
+

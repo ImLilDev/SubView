@@ -31,7 +31,7 @@ void erreur(const char*txt)
 
 void readConfigFile(station * _station){
 
-    FILE * configFile = fopen("config.txt", "r");
+    FILE * configFile = fopen("../config.txt", "r");
     char data[255];
     char key[255];
     int i =0;
