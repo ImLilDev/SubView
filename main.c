@@ -27,39 +27,6 @@ void erreur(const char*txt)
     exit(EXIT_FAILURE);
 }
 
-
-
-void readConfigFile(station * _station){
-
-    FILE * configFile = fopen("../config.txt", "r");
-    char data[255];
-    char key[255];
-    int i =0;
-    if(configFile == NULL){
-        printf("File not open");
-    }else
-    {
-        while(fscanf(configFile,"%s %s",key, data) != EOF){
-
-            if(strcmp( key, "station" ) == 0){
-                strcpy(_station->stationName , data);
-                printf("station name from file : %s\n" ,_station->stationName);
-            }
-            if(strcmp(key, "Direction")==0){
-                strcpy( _station->direction, data);
-            }
-            if(strcmp(key, "Line")==0){
-                _station->metroNumber = atoi(data);
-            }
-        }
-        printf("station name from file after while() : %s\n" , _station->stationName );
-        printf("end of file\n");
-    }
-    fclose(configFile);
-}
-
-
-
 void drawTrainTime(int time, float x1, float y1, float x2, float y2, float x, float y){ // to avoid code repetition
 
 
@@ -76,7 +43,6 @@ void drawTrainTime(int time, float x1, float y1, float x2, float y2, float x, fl
 void drawscheldures(){
 
     station  _station = creatStation();
-    readConfigFile( &_station);
 
     ///                   console test                 ///
 
@@ -91,6 +57,7 @@ void drawscheldures(){
     ///                     display                    ///
     ALLEGRO_FONT * Parisine_font_small = al_load_ttf_font("../Ressources/fonts/Parisine-Bold.otf",64,0);
     ALLEGRO_FONT * Parisine_font_big = al_load_ttf_font("../Ressources/fonts/Parisine-Bold.otf",135,0);
+    ALLEGRO_COLOR primary_grey = al_map_rgb(240,240,240);
     drawTrainTime(_station.timeNextTrain1,1086, 386, 1411,539,1150,405);
     drawTrainTime(_station.timeNextTrain2,1501,386, 1826,539, 1565, 405);
     drawTrainTime(_station.timeNextTrain3,1086,624, 1412,777,1150,635);
@@ -99,6 +66,7 @@ void drawscheldures(){
     al_draw_text(Parisine_font_small, al_map_rgb(255,255,255), 1676,439,0, "min"); // min text
     al_draw_text(Parisine_font_small, al_map_rgb(255,255,255), 1263,666,0, "min"); // min text
     al_draw_text(Parisine_font_small, al_map_rgb(255,255,255), 1676,666,0, "min"); // min text
+    al_draw_filled_rectangle(88,386, 1063, 599, primary_grey); // overdraw on text
     al_draw_text(Parisine_font_big, al_map_rgb(22,75,156), 120,378,0, _station.destination); // destination name
 }
 
@@ -204,6 +172,50 @@ void drawprimarypage(){
     al_flip_display(); // end editing mode
 }
 
+void changedirection(station *_station) {
+
+    FILE *configFile = fopen("../config.txt", "r+");
+    char data[255];
+    char key[255];
+    if (configFile == NULL) {
+        printf("File not open");
+    } else {
+        while (fscanf(configFile, "%s %s", key, data) != EOF) {
+
+            if (strcmp(key, "Direction") == 0){
+                if(strcmp(data , "A")==0){
+                    fseek(configFile,-1,SEEK_CUR);
+                    fputc('R',configFile);
+                }
+                else{
+                    fseek(configFile,-1,SEEK_CUR);
+                    fputc('A',configFile);
+                }
+
+            }
+
+        }
+    }
+    al_flip_display();
+    drawscheldures();
+    al_flip_display();
+}
+
+
+void changemetro(){
+
+    int numMetro = 1;
+
+    if (numMetro == 14){
+        numMetro = 1;
+        printf("%d", numMetro);
+    } else {
+        numMetro++;
+        printf("%d", numMetro);
+    }
+
+}
+
 
 
 
@@ -294,17 +306,7 @@ int main(int argc, char *argv[])
         int minute = tm_struct->tm_min;
         int sec = tm_struct->tm_sec;
         int tmp;
-        int tmp2;
 
-        if(sec >= tmp2+5){
-            printf("plus de 5 second sont passé");
-            al_flip_display();
-            //drawscheldures();
-            drawprimarypage();
-            al_flip_display();
-            tmp = tm_struct->tm_min;
-            tmp2 = tm_struct->tm_sec;
-        }
 
 
         if(tmp != minute){
@@ -313,7 +315,6 @@ int main(int argc, char *argv[])
             drawtime();
             al_flip_display();
             tmp = tm_struct->tm_min;
-            tmp2 = tm_struct->tm_sec;
         }
 
 
@@ -328,6 +329,15 @@ int main(int argc, char *argv[])
         };
 
         al_get_mouse_state(&mouse);
+
+        if(88 < mouse.x && mouse.x < 1063 && 386<mouse.y && mouse.y <599 && mouse.buttons &1 ){ // clic on direction text
+            changedirection(&station1);
+        }
+
+        if(120 < mouse.x && mouse.x < 509 && 86<mouse.y && mouse.y <277 && mouse.buttons &1 ){ // clic on metro logo
+            printf("clic on metro logo");
+            changemetro();
+        }
 
         if(100 < mouse.x && mouse.x < 400 && 830<mouse.y && mouse.y <930 && mouse.buttons &1 ){ // clic on exit button
             printf("stop button pressed");

@@ -1,8 +1,7 @@
-[DEFAULT STATION]									
-station nation
-Line 1
-Direction A
+[DEFAULT STATION]
+station les+gobelins
+Line 7
+Direction R
 
 [SCEEN SETTINGS]
 RefreshRate 5
-

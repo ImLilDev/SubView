@@ -15,7 +15,7 @@ typedef struct station {
     int timeNextTrain4;
     int metroNumber;
     const char * destination;
-    char direction[1];
+    char direction[2];
 } station;
 
 typedef struct line {
@@ -140,21 +140,58 @@ const char * getDestination(FILE* fp){
     json_object_object_get_ex(parsed_json, "destination", &destination);
     printf("%s\n", json_object_get_string(destination));
     destinationTrain = json_object_get_string(destination);
-    if (strcmp(destinationTrain, "Chateau de Vincennes") <= 0){
-        destinationTrain = "Ch. Vincennes";
-        return destinationTrain;
-    }
-    if(strcmp(destinationTrain, "La Defense (Grande arche)") <= 0){
+
+    if(strcmp(destinationTrain, "La Defense (Grande Arche)") == 0){
         destinationTrain = "La Defense";
-        return destinationTrain;
     }
 
-    if(strcmp(destinationTrain, "Pont de Levallois-Becon") <= 0){
+    if (strcmp(destinationTrain, "Chateau de Vincennes") == 0){
+        destinationTrain = "Ch. Vincennes";
+    }
+
+    if(strcmp(destinationTrain, "Pont de Levallois-Becon") == 0){
         destinationTrain = "Pt. Levallois-B";
-        return destinationTrain;
+    }
+
+    if(strcmp(destinationTrain, "Villejuif-Louis Aragon") == 0){
+        destinationTrain = "Villejuif-Louis";
+    }
+
+    if(strcmp(destinationTrain, "La Courneuve-8-Mai-1945") == 0){
+        destinationTrain = "La Courneuve";
     }
 
     return destinationTrain;
+}
+
+void readConfigFile(station * _station){
+
+
+    FILE * configFile = fopen("../config.txt", "r");
+    char data[255];
+    char key[255];
+    int i =0;
+    if(configFile == NULL){
+        printf("File not open");
+    }else
+    {
+        while(fscanf(configFile,"%s %s",key, data) != EOF){
+
+            if(strcmp( key, "station" ) == 0){
+                strcpy(_station->stationName , data);
+                printf("station name from file : %s\n" ,_station->stationName);
+            }
+            if(strcmp(key, "Direction")==0){
+                strcpy( _station->direction, data);
+            }
+            if(strcmp(key, "Line")==0){
+                _station->metroNumber = atoi(data);
+            }
+        }
+        printf("station name from file after while() : %s\n" , _station->stationName );
+        printf("end of file\n");
+    }
+    fclose(configFile);
 }
 
 station creatStation(){
@@ -162,7 +199,16 @@ station creatStation(){
     CURL *curl;
     FILE *fp;
     CURLcode res;
-    char *url = "https://api-ratp.pierre-grimaud.fr/v4/schedules/metros/1/berault/R";
+    station _station;
+
+
+    readConfigFile(&_station);
+
+
+
+    char url[255];
+    sprintf(url, "https://api-ratp.pierre-grimaud.fr/v4/schedules/metros/%d/%s/%s", _station.metroNumber, _station.stationName, _station.direction);
+
     char outfilename[FILENAME_MAX] = "result.json";
     curl = curl_easy_init();
     if(curl) {
@@ -177,7 +223,6 @@ station creatStation(){
 
 
     formatFile("result.json");
-    station _station;
     _station.destination = getDestination(fp);
     _station.timeNextTrain1 = recupTime(fp);
     suppr("result.json");
