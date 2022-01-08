@@ -34,10 +34,29 @@ void drawTrainTime(int time, float x1, float y1, float x2, float y2, float x, fl
     ALLEGRO_COLOR dark_grey = al_map_rgb(70,70,70);
     if(time > 9){
         x = x - 30;
+    } else if(time >= 20){
+        x = x - 10;
     }
 
     al_draw_filled_rectangle(x1,y1,x2,y2,dark_grey); // 1st rectangle
     al_draw_textf(led_font, al_map_rgb(253,204,75), x , y ,0,"%d",  time); // time for next metro
+}
+
+
+void drawmetrologo(station *_station1){
+
+    ALLEGRO_BITMAP*metrologo; // l'image
+    // charger une image dans le programme
+
+    char path[255];
+    sprintf(path, "../Ressources/images/%d.png", _station1->metroNumber);
+
+    metrologo = al_load_bitmap(path);
+    if(!metrologo)
+        erreur("al_load_bitmap()");
+    // puis l'afficher
+    al_draw_bitmap(metrologo,120,86,0);
+
 }
 
 void drawscheldures(){
@@ -115,7 +134,6 @@ void drawprimarypage(){
     ALLEGRO_COLOR dark_grey = al_map_rgb(70,70,70);
     ALLEGRO_COLOR primary_blue = al_map_rgb(22,75,156);
     ALLEGRO_COLOR alternative_grey = al_map_rgb(188,188,188);
-    ALLEGRO_BITMAP*metrologo;                // l'image
     ALLEGRO_BITMAP*heart;
     ALLEGRO_BITMAP*iledefrance;
     ALLEGRO_BITMAP*RATP;
@@ -123,13 +141,6 @@ void drawprimarypage(){
     al_flip_display(); // go editing mode
     al_clear_to_color(al_map_rgb(255,255,255)); // draw blank screen
     al_draw_filled_rectangle(50,50,1870,948,primary_grey);
-
-    // charger une image dans le programme
-    metrologo = al_load_bitmap("../Ressources/images/1.png");
-    if(!metrologo)
-        erreur("al_load_bitmap()");
-    // puis l'afficher
-    al_draw_bitmap(metrologo,120,86,0);
 
     al_draw_text(Parisine_font_medium, al_map_rgb(22,75,156), 598,125,0, station); // station name
 
@@ -204,17 +215,34 @@ void changedirection(station *_station) {
 
 void changemetro(){
 
-    int numMetro = 1;
-
-    if (numMetro == 14){
-        numMetro = 1;
-        printf("%d", numMetro);
+    FILE *configFile = fopen("../config.txt", "r+");
+    int data= 0;
+    char key[255];
+    if (configFile == NULL) {
+        printf("File not open");
     } else {
-        numMetro++;
-        printf("%d", numMetro);
+        while (fscanf(configFile, "%s %d", key, &data) != EOF) {
+
+            if (strcmp(key, "Line") == 0){
+                if(data == 14){
+                    fseek(configFile,-1,SEEK_CUR);
+                    data = 1;
+                    fprintf(configFile,"%d", data);
+                }
+                else{
+                    fseek(configFile,-1,SEEK_CUR);
+                    data++;
+                    fprintf(configFile,"%d", data);
+                }
+
+            }
+
+        }
     }
 
-}
+    fclose(configFile);
+
+    }
 
 
 
@@ -289,7 +317,9 @@ int main(int argc, char *argv[])
     // End Audio
     //
 
-
+al_flip_display();
+    drawmetrologo(&station1);
+    al_flip_display();
 
 
   //  sprintf(compare, "something");
@@ -306,7 +336,18 @@ int main(int argc, char *argv[])
         int minute = tm_struct->tm_min;
         int sec = tm_struct->tm_sec;
         int tmp;
+        int tmp2;
 
+
+
+        if(sec >= tmp2+5){
+            printf("plus de 5 second sont passé");
+            al_flip_display();
+            drawscheldures();
+            al_flip_display();
+            tmp = tm_struct->tm_min;
+            tmp2 = tm_struct->tm_sec;
+        }
 
 
         if(tmp != minute){
@@ -315,6 +356,7 @@ int main(int argc, char *argv[])
             drawtime();
             al_flip_display();
             tmp = tm_struct->tm_min;
+            tmp2 = tm_struct->tm_sec;
         }
 
 
