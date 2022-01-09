@@ -41,6 +41,23 @@ void drawTrainTime(int time, float x1, float y1, float x2, float y2, float x, fl
     al_draw_filled_rectangle(x1,y1,x2,y2,dark_grey); // 1st rectangle
     al_draw_textf(led_font, al_map_rgb(253,204,75), x , y ,0,"%d",  time); // time for next metro
 }
+void drawmNextMetroLogo(int number){
+    ALLEGRO_COLOR primary_grey = al_map_rgb(240,240,240);
+    ALLEGRO_BITMAP*metrologo; // l'image
+    // charger une image dans le programme
+
+    char path[255];
+    sprintf(path, "../Ressources/images/%d.png", number);
+
+    metrologo = al_load_bitmap(path);
+    if(!metrologo)
+        erreur("al_load_bitmap()");
+    // puis l'afficher
+    al_draw_filled_rectangle(60,59,548,320,primary_grey);
+
+    al_draw_bitmap(metrologo,120,86,0);
+
+}
 
 
 void drawmetrologo(station *_station1){
@@ -212,6 +229,9 @@ void changemetro(){
     FILE *configFile = fopen("../config.txt", "r+");
     int data= 0;
     char key[255];
+    char name[255];
+    struct json_object *nameStation;
+    ALLEGRO_FONT * Parisine_font_medium = al_load_ttf_font("../Ressources/fonts/Parisine-Bold.otf",96,0);
     if (configFile == NULL) {
         printf("File not open");
     } else {
@@ -242,11 +262,55 @@ void changemetro(){
             }
 
         }
+
+        CURL *curl;
+        FILE *fp;
+        CURLcode res;
+        char url[255];
+        sprintf(url, "https://api-ratp.pierre-grimaud.fr/v4/stations/metros/%d", data);
+
+        char outfilename[FILENAME_MAX] = "result.json";
+        curl = curl_easy_init();
+        if(curl) {
+            fp = fopen(outfilename,"wb");
+            curl_easy_setopt(curl, CURLOPT_URL, url);
+            curl_easy_setopt(curl, CURLOPT_WRITEDATA, fp);
+            res = curl_easy_perform(curl);
+            /* always cleanup */
+            curl_easy_cleanup(curl);
+            fclose(fp);
+        }
+        formatFile("result.json");
+        FILE *fp2;
+
+        char buffer[1024];
+        struct json_object *parsed_json;
+        struct json_object *slug;
+
+        fp2 = fopen("result.json","r");
+        fread(buffer, 1024, 1, fp);
+        fclose(fp2);
+
+        parsed_json = json_tokener_parse(buffer);
+
+        json_object_object_get_ex(parsed_json, "slug", &slug);
+        json_object_object_get_ex(parsed_json, "name", &nameStation);
+        printf("NAME   :   %s\n", json_object_get_string(nameStation));
+        strcpy(name, json_object_get_string(slug));
+
+
+
     }
 
     fclose(configFile);
-
-    }
+    changeStationName(name);
+    printf("new name : %s\n" , name);
+    printf("ChangeStationName  à  été  appelée \n");
+    al_flip_display();
+    drawscheldures();
+    drawmNextMetroLogo(data);
+    al_flip_display();
+}
 
 
 

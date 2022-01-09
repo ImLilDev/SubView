@@ -1,8 +1,6 @@
-[DEFAULT STATION]									
-station nation
-Line 1 
-Direction A
-
 [SCREEN SETTINGS]
 RefreshRate 5
 
+[DEFAULT STATION]
+Line 1  Direction R
+station chateau+de+vincennes~~~~~~~~~~~~~~~~~~~~~~~~~~~~

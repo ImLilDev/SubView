@@ -106,6 +106,8 @@ int recupTime(FILE* fp){
     return time;
 }
 
+
+
 /*char * getStationName(FILE* fp){
 
     FILE *fp2;
@@ -163,6 +165,25 @@ const char * getDestination(FILE* fp){
 
     return destinationTrain;
 }
+void changeStationName(char newName[255]){
+    FILE * configFile = fopen("../config.txt", "r+");
+    char data[255];
+    char key[255];
+    if(configFile == NULL){
+        printf("File not open");
+    }else
+    {
+        while(fscanf(configFile,"%s %s",key, data) != EOF){
+
+            if(strcmp( key, "station" ) == 0){
+                fseek(configFile,-(int)strlen(data),SEEK_CUR);
+                fputs(newName, configFile);
+                fputs("~~~~~~~~~~~~~~~~~~~~",configFile);
+            }
+        }
+    }
+    fclose(configFile);
+}
 
 void readConfigFile(station * _station){
 
@@ -170,7 +191,6 @@ void readConfigFile(station * _station){
     FILE * configFile = fopen("../config.txt", "r");
     char data[255];
     char key[255];
-    int i =0;
     if(configFile == NULL){
         printf("File not open");
     }else
