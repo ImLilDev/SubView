@@ -41,8 +41,26 @@ void drawTrainTime(int time, float x1, float y1, float x2, float y2, float x, fl
     al_draw_filled_rectangle(x1,y1,x2,y2,dark_grey); // 1st rectangle
     al_draw_textf(led_font, al_map_rgb(253,204,75), x , y ,0,"%d",  time); // time for next metro
 }
-void drawmNextMetroLogo(int number){
+void drawNextMetroLogo(int number){
     ALLEGRO_COLOR primary_grey = al_map_rgb(240,240,240);
+    ALLEGRO_COLOR color1 = al_map_rgb(255,190,0);
+    ALLEGRO_COLOR color2 = al_map_rgb(0,108,184);
+    ALLEGRO_COLOR color3 = al_map_rgb(155,152,59);
+    ALLEGRO_COLOR color4 = al_map_rgb(187,75,156);
+    ALLEGRO_COLOR color5 = al_map_rgb(242,142,66);
+    ALLEGRO_COLOR color6 = al_map_rgb(119,198,150);
+    ALLEGRO_COLOR color7 = al_map_rgb(245,159,179);
+    ALLEGRO_COLOR color8 = al_map_rgb(206,173,210);
+    ALLEGRO_COLOR color9 = al_map_rgb(213,201,36);
+    ALLEGRO_COLOR color10 = al_map_rgb(227,179,42);
+    ALLEGRO_COLOR color11 = al_map_rgb(141,94,42);
+    ALLEGRO_COLOR color12 = al_map_rgb(23,129,79);
+    ALLEGRO_COLOR color13 = al_map_rgb(137,211,222);
+    ALLEGRO_COLOR color14 = al_map_rgb(102,36,131);
+
+
+
+
     ALLEGRO_BITMAP*metrologo; // l'image
     // charger une image dans le programme
 
@@ -56,6 +74,60 @@ void drawmNextMetroLogo(int number){
     al_draw_filled_rectangle(60,59,548,320,primary_grey);
 
     al_draw_bitmap(metrologo,120,86,0);
+
+
+    switch(number){
+
+        case 1:
+            al_draw_filled_rectangle(50,813, 1256, 947, color1); // bottom left rectangle
+            break;
+        case 2:
+            al_draw_filled_rectangle(50,813, 1256, 947, color2); // bottom left rectangle
+            break;
+        case 3:
+            al_draw_filled_rectangle(50,813, 1256, 947, color3); // bottom left rectangle
+            break;
+        case 4:
+            al_draw_filled_rectangle(50,813, 1256, 947, color4); // bottom left rectangle
+            break;
+        case 5:
+            al_draw_filled_rectangle(50,813, 1256, 947, color5); // bottom left rectangle
+            break;
+        case 6:
+            al_draw_filled_rectangle(50,813, 1256, 947, color6); // bottom left rectangle
+            break;
+        case 7:
+            al_draw_filled_rectangle(50,813, 1256, 947, color7); // bottom left rectangle
+            break;
+        case 8:
+            al_draw_filled_rectangle(50,813, 1256, 947, color8); // bottom left rectangle
+            break;
+        case 9:
+            al_draw_filled_rectangle(50,813, 1256, 947, color9); // bottom left rectangle
+            break;
+        case 10:
+            al_draw_filled_rectangle(50,813, 1256, 947, color10); // bottom left rectangle
+            break;
+        case 11:
+            al_draw_filled_rectangle(50,813, 1256, 947, color11); // bottom left rectangle
+            break;
+        case 12:
+            al_draw_filled_rectangle(50,813, 1256, 947, color12); // bottom left rectangle
+            break;
+        case 13:
+            al_draw_filled_rectangle(50,813, 1256, 947, color13); // bottom left rectangle
+            break;
+        case 14:
+            al_draw_filled_rectangle(50,813, 1256, 947, color14); // bottom left rectangle
+            break;
+    }
+
+
+    // ICI
+
+
+
+
 
 }
 
@@ -308,7 +380,7 @@ void changemetro(){
     printf("ChangeStationName  à  été  appelée \n");
     al_flip_display();
     drawscheldures();
-    drawmNextMetroLogo(data);
+    drawNextMetroLogo(data);
     al_flip_display();
 }
 
@@ -410,9 +482,9 @@ al_flip_display();
 
         if(sec >= tmp2+5){
             printf("plus de 5 second sont passé");
-            al_flip_display();
+          /*  al_flip_display();
             drawscheldures();
-            al_flip_display();
+            al_flip_display(); */
             tmp = tm_struct->tm_min;
             tmp2 = tm_struct->tm_sec;
         }
@@ -441,12 +513,13 @@ al_flip_display();
         al_get_mouse_state(&mouse);
 
         if(88 < mouse.x && mouse.x < 1063 && 386<mouse.y && mouse.y <599 && mouse.buttons &1 ){ // clic on direction text
+            al_rest(0.1);
             changedirection(&station1);
         }
 
         if(120 < mouse.x && mouse.x < 509 && 86<mouse.y && mouse.y <277 && mouse.buttons &1 ){ // clic on metro logo
             printf("clic on metro logo");
-            al_rest(1.0);
+            al_rest(0.1);
             changemetro();
         }
 
