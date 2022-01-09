@@ -1,0 +1,7 @@
+[SCREEN SETTINGS]
+RefreshRate 5
+FirstStartup 1
+
+[DEFAULT STATION]
+Line 7  Direction A
+station la+courneuve+8+mai+1945~~~~~~~~~~~~~~~~~~~~~
