@@ -1,6 +1,7 @@
 [SCREEN SETTINGS]
 RefreshRate 5
+FirstStartup 1
 
 [DEFAULT STATION]
-Line 1  Direction A
-station chateau+de+vincennes~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Line 8  Direction A
+station balard~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~

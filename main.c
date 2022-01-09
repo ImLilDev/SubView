@@ -122,13 +122,6 @@ void drawNextMetroLogo(int number){
             break;
     }
 
-
-    // ICI
-
-
-
-
-
 }
 
 
@@ -198,6 +191,60 @@ void drawtime(){
 
 }
 
+void firstStartup() {
+
+    ALLEGRO_COLOR color1 = al_map_rgb(255,190,0);
+
+    FILE *configFile = fopen("../config.txt", "r+");
+    char data[255];
+    int fin=0;
+    char FirstStartup[255];
+    if (configFile == NULL) {
+        printf("File not open");
+    } else {
+        while (fscanf(configFile, "%s %s", FirstStartup, data) != EOF) {
+
+            if (strcmp(FirstStartup, "FirstStartup") == 0){
+                if(strcmp(data , "0")==0){
+
+                    al_flip_display();
+                    ALLEGRO_BITMAP*overlay;
+                    ALLEGRO_KEYBOARD_STATE key;        // keyboard info
+
+                    al_clear_to_color(al_map_rgb(255,255,255)); // draw blank screen
+
+                    overlay = al_load_bitmap("../Ressources/images/overlay.png");
+                    if(!overlay)
+                        erreur("al_load_bitmap()");
+                    al_draw_bitmap(overlay,0,0,0);
+
+                    al_flip_display();
+
+
+                    while(!fin) {
+
+                        // récupération de l'état du clavier
+                        al_get_keyboard_state(&key);
+
+                        // si touche [Echap] appuyée fin boucle et quitter
+                        if (al_key_down(&key, ALLEGRO_KEY_SPACE)) {
+                            fseek(configFile, -1, SEEK_CUR);
+                            fputc('1', configFile);
+                            fin = 1;
+                        };
+
+                    }
+
+                }
+
+            }
+
+        }
+    }
+}
+
+
+
 void drawprimarypage(){
 
 
@@ -226,7 +273,11 @@ void drawprimarypage(){
     ALLEGRO_BITMAP*RATP;
 
     al_flip_display(); // go editing mode
+
+
+
     al_clear_to_color(al_map_rgb(255,255,255)); // draw blank screen
+
     al_draw_filled_rectangle(50,50,1870,948,primary_grey);
 
     al_draw_text(Parisine_font_medium, al_map_rgb(22,75,156), 598,125,0, station); // station name
@@ -264,7 +315,9 @@ void drawprimarypage(){
     drawscheldures();
 
     al_flip_display(); // end editing mode
+
 }
+
 
 void changedirection(station *_station) {
 
@@ -439,6 +492,7 @@ int main(int argc, char *argv[])
     // End checking
 
 
+    firstStartup();
     drawprimarypage();
 
     //
@@ -457,7 +511,7 @@ int main(int argc, char *argv[])
     // End Audio
     //
 
-al_flip_display();
+    al_flip_display();
     drawmetrologo(&station1);
     al_flip_display();
 

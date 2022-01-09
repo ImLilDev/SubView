@@ -178,7 +178,7 @@ void changeStationName(char newName[255]){
             if(strcmp( key, "station" ) == 0){
                 fseek(configFile,-(int)strlen(data),SEEK_CUR);
                 fputs(newName, configFile);
-                fputs("~~~~~~~~~~~~~~~~~~~~",configFile);
+                fputs("~~~~~~~~~~~~~~~~~",configFile);
             }
         }
     }
