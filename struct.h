@@ -162,6 +162,49 @@ const char * getDestination(FILE* fp){
     if(strcmp(destinationTrain, "La Courneuve-8-Mai-1945") == 0){
         destinationTrain = "La Courneuve";
     }
+    if(strcmp(destinationTrain, "Porte Dauphine (Marechal de Lattre de Tassigny)") == 0){
+        destinationTrain = "Prt-Dauphine";
+    }
+    if(strcmp(destinationTrain, "Mairie de Montrouge") == 0){
+        destinationTrain = "Montrouge";
+    }
+    if(strcmp(destinationTrain, "Porte de Clignancourt") == 0){
+        destinationTrain = "Clignancourt";
+    }
+    if(strcmp(destinationTrain, "Bobigny-Pablo-Picasso") == 0){
+        destinationTrain = "Bobigny-Pablo";
+    }
+    if(strcmp(destinationTrain, "Charles de Gaulle-Etoile") == 0){
+        destinationTrain = "CDG-Etoile";
+    }
+    if(strcmp(destinationTrain, "Creteil-Pointe du Lac") == 0){
+        destinationTrain = "Creteil-Lac";
+    }
+    if(strcmp(destinationTrain, "Mairie de Montreuil") == 0){
+        destinationTrain = "Montreuil";
+    }
+    if(strcmp(destinationTrain, "Boulogne Pont de Saint-Cloud") == 0){
+        destinationTrain = "Boulogne";
+    }
+    if(strcmp(destinationTrain, "Gare d'Austerlitz") == 0){
+        destinationTrain = "G. d'Austerlitz";
+    }
+    if(strcmp(destinationTrain, "Mairie des Lilas") == 0){
+        destinationTrain = "M. des Lilas";
+    }
+    if(strcmp(destinationTrain, "Boulogne Pont de Saint-Cloud") == 0){
+        destinationTrain = "Boulogne";
+    }
+    if(strcmp(destinationTrain, "Front Populaire") == 0){
+        destinationTrain = "F. Populaire";
+    }
+    if(strcmp(destinationTrain, "Chatillon Montrouge") == 0){
+        destinationTrain = "Montrouge";
+    }
+    if(strcmp(destinationTrain, "Asnieres-Gennevilliers Les Courtilles") == 0){
+        destinationTrain = "Gennevilliers";
+    }
+
 
     return destinationTrain;
 }
@@ -255,6 +298,110 @@ station creatStation(){
     //_station.stationName = getStationName(fp);
     return _station;
 }
+
+void drawnextStationName(){
+
+    ALLEGRO_FONT * Parisine_font_medium = al_load_ttf_font("../Ressources/fonts/Parisine-Bold.otf",96,0);
+    ALLEGRO_COLOR primary_grey = al_map_rgb(240,240,240);
+
+
+    FILE *configFile = fopen("../config.txt", "r");
+    int data= 0;
+    int number = 0 ;
+    char key[255];
+    struct json_object *nameStation;
+    if (configFile == NULL) {
+        printf("File not open");
+    } else {
+        while (fscanf(configFile, "%s %d", key, &data) != EOF) {
+
+            if (strcmp(key, "Line") == 0){
+                number = data;
+            }
+
+        }
+
+    }
+
+    CURL *curl;
+    FILE *fp;
+    CURLcode res;
+    char name[255];
+    char Displayname[255];
+    char url[255];
+    sprintf(url, "https://api-ratp.pierre-grimaud.fr/v4/stations/metros/%d", number);
+
+    char outfilename[FILENAME_MAX] = "result.json";
+    curl = curl_easy_init();
+    if(curl) {
+        fp = fopen(outfilename,"wb");
+        curl_easy_setopt(curl, CURLOPT_URL, url);
+        curl_easy_setopt(curl, CURLOPT_WRITEDATA, fp);
+        res = curl_easy_perform(curl);
+        /* always cleanup */
+        curl_easy_cleanup(curl);
+        fclose(fp);
+    }
+    formatFile("result.json");
+    FILE *fp2;
+
+    char buffer[1024];
+    struct json_object *parsed_json;
+    struct json_object *slug;
+
+    fp2 = fopen("result.json","r");
+    fread(buffer, 1024, 1, fp);
+    fclose(fp2);
+
+    parsed_json = json_tokener_parse(buffer);
+
+    json_object_object_get_ex(parsed_json, "slug", &slug);
+    json_object_object_get_ex(parsed_json, "name", &nameStation);
+    printf("NAME   :   %s\n", json_object_get_string(nameStation));
+    printf("SLUG   :   %s\n", json_object_get_string(slug));
+    strcpy(name, json_object_get_string(slug));
+    strcpy(Displayname, json_object_get_string(nameStation));
+
+    changeStationName(name);
+    printf("new name : %s\n" , name);
+    printf("ChangeStationName  à  été  appelée \n");
+
+    if(strcmp(Displayname, "Chateau de Vincennes") == 0){
+        strcpy(Displayname, "Ch. de Vincennes");
+    }
+    if(strcmp(Displayname, "Gallieni (Parc de Bagnolet)") == 0){
+        strcpy(Displayname, "Gallieni (Parc)");
+    }
+    if(strcmp(Displayname, "Porte de Clignancourt") == 0){
+        strcpy(Displayname, "Pt. de Clignancourt");
+    }
+    if(strcmp(Displayname, "Bobigny-Pablo-Picasso") == 0){
+        strcpy(Displayname, "Bobigny-Picasso");
+    }
+    if(strcmp(Displayname, "La Courneuve-8-Mai-1945") == 0){
+        strcpy(Displayname, "La Courneuve");
+    }
+    if(strcmp(Displayname, "Boulogne Pont de Saint-Cloud") == 0){
+        strcpy(Displayname, "Boulogne");
+    }
+    if(strcmp(Displayname, "Chatillon Montrouge") == 0){
+        strcpy(Displayname, "Montrouge");
+    }
+    if(strcmp(Displayname, "Mairie de Saint-Ouen") == 0){
+        strcpy(Displayname, "M. de Saint-Ouen");
+    }
+
+    al_draw_filled_rectangle(582,102, 1482, 266, primary_grey); // blue line
+    al_draw_text(Parisine_font_medium, al_map_rgb(22,75,156), 598, 125, 0, Displayname);
+
+
+
+
+
+}
+
+
+
 
 
 int determineLine() {

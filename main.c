@@ -256,7 +256,7 @@ void drawprimarypage(){
 
     sprintf(realtime, "%d:%d", hour, minute);
 
-    char station[255] = "Nation️";
+  //  char station[255] = "Nation️";
 
     // char realtime[255] = "15:38";
 
@@ -279,7 +279,7 @@ void drawprimarypage(){
 
     al_draw_filled_rectangle(50,50,1870,948,primary_grey);
 
-    al_draw_text(Parisine_font_medium, al_map_rgb(22,75,156), 598,125,0, station); // station name
+//    al_draw_text(Parisine_font_medium, al_map_rgb(22,75,156), 598,125,0, station); // station name
 
 
     drawtime();
@@ -310,7 +310,7 @@ void drawprimarypage(){
     al_draw_bitmap(RATP,1727,820,0);
 
     drawscheldures();
-
+    drawnextStationName();
     drawNextMetroLogo(determineLine());
 
     al_flip_display(); // end editing mode
@@ -353,16 +353,14 @@ void changemetro(){
     FILE *configFile = fopen("../config.txt", "r+");
     int data= 0;
     char key[255];
-    char name[255];
     struct json_object *nameStation;
-    ALLEGRO_FONT * Parisine_font_medium = al_load_ttf_font("../Ressources/fonts/Parisine-Bold.otf",96,0);
     if (configFile == NULL) {
         printf("File not open");
     } else {
         while (fscanf(configFile, "%s %d", key, &data) != EOF) {
 
             if (strcmp(key, "Line") == 0){
-                if(data == 14){
+                if(data == 13){ // usually 14
                     fseek(configFile,-2,SEEK_CUR);
                     data = 1;
                     fprintf(configFile,"%d ",data);
@@ -387,52 +385,17 @@ void changemetro(){
 
         }
 
-        CURL *curl;
-        FILE *fp;
-        CURLcode res;
-        char url[255];
-        sprintf(url, "https://api-ratp.pierre-grimaud.fr/v4/stations/metros/%d", data);
-
-        char outfilename[FILENAME_MAX] = "result.json";
-        curl = curl_easy_init();
-        if(curl) {
-            fp = fopen(outfilename,"wb");
-            curl_easy_setopt(curl, CURLOPT_URL, url);
-            curl_easy_setopt(curl, CURLOPT_WRITEDATA, fp);
-            res = curl_easy_perform(curl);
-            /* always cleanup */
-            curl_easy_cleanup(curl);
-            fclose(fp);
-        }
-        formatFile("result.json");
-        FILE *fp2;
-
-        char buffer[1024];
-        struct json_object *parsed_json;
-        struct json_object *slug;
-
-        fp2 = fopen("result.json","r");
-        fread(buffer, 1024, 1, fp);
-        fclose(fp2);
-
-        parsed_json = json_tokener_parse(buffer);
-
-        json_object_object_get_ex(parsed_json, "slug", &slug);
-        json_object_object_get_ex(parsed_json, "name", &nameStation);
-        printf("NAME   :   %s\n", json_object_get_string(nameStation));
-        strcpy(name, json_object_get_string(slug));
-
-
-
     }
 
     fclose(configFile);
-    changeStationName(name);
-    printf("new name : %s\n" , name);
-    printf("ChangeStationName  à  été  appelée \n");
+
     al_flip_display();
-    drawscheldures();
+
+    drawnextStationName();
     drawNextMetroLogo(data);
+    drawscheldures();
+
+
     al_flip_display();
 }
 
@@ -510,9 +473,8 @@ int main(int argc, char *argv[])
     // End Audio
     //
 
-  //  sprintf(compare, "something");
 
-    // keyboard escape key detection
+    // while de fin
     while(!fin){
 
         //
