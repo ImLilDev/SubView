@@ -257,6 +257,28 @@ station creatStation(){
 }
 
 
+int determineLine() {
+
+    FILE *configFile = fopen("../config.txt", "r");
+    int data = 0;
+    char key[255];
+    if (configFile == NULL) {
+        printf("File not open");
+    } else {
+        while (fscanf(configFile, "%s %d", key, &data) != EOF) {
+
+            if (strcmp(key, "Line") == 0) {
+
+                return data;
+
+            }
+
+        }
+    }
+    return 0;
+}
+
+
 
 
 

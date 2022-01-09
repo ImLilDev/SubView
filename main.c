@@ -267,7 +267,6 @@ void drawprimarypage(){
     ALLEGRO_COLOR primary_grey = al_map_rgb(240,240,240);
     ALLEGRO_COLOR dark_grey = al_map_rgb(70,70,70);
     ALLEGRO_COLOR primary_blue = al_map_rgb(22,75,156);
-    ALLEGRO_COLOR alternative_grey = al_map_rgb(188,188,188);
     ALLEGRO_BITMAP*heart;
     ALLEGRO_BITMAP*iledefrance;
     ALLEGRO_BITMAP*RATP;
@@ -287,8 +286,6 @@ void drawprimarypage(){
     
 
     al_draw_filled_rectangle(121,341, 1827, 350, primary_blue); // blue line
-
-    al_draw_filled_rectangle(50,813, 1256, 947, alternative_grey); // bottom left rectangle
 
     al_draw_filled_rounded_rectangle(20,957, 129, 1066, 30, 30, primary_grey); // add rectangle
     al_draw_filled_rounded_rectangle(35,1007, 114, 1016, 2, 2, primary_blue); // line1
@@ -313,6 +310,8 @@ void drawprimarypage(){
     al_draw_bitmap(RATP,1727,820,0);
 
     drawscheldures();
+
+    drawNextMetroLogo(determineLine());
 
     al_flip_display(); // end editing mode
 
@@ -510,11 +509,6 @@ int main(int argc, char *argv[])
     //
     // End Audio
     //
-
-    al_flip_display();
-    drawmetrologo(&station1);
-    al_flip_display();
-
 
   //  sprintf(compare, "something");
 
