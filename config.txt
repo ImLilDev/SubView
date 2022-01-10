@@ -1,7 +1,7 @@
 [SCREEN SETTINGS]
 RefreshRate 5
-FirstStartup 0
+FirstStartup 1
 
 [DEFAULT STATION]
-Line 5  Direction R
-station bobigny+pablo+picasso~~~~~~~~~~~~~~~~~~~~~~~~
+Line 6  Direction R
+station nation~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
