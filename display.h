@@ -14,7 +14,7 @@ void drawNextMetroLogo(int);
 
 //void drawmetrologo(station *);
 
-void drawScheldures();
+void drawSchedules();
 
 void drawTime();
 
@@ -72,8 +72,6 @@ void drawNextMetroLogo(int number){
     ALLEGRO_COLOR color12 = al_map_rgb(23,129,79);
     ALLEGRO_COLOR color13 = al_map_rgb(137,211,222);
     ALLEGRO_COLOR color14 = al_map_rgb(102,36,131);
-
-
 
 
     ALLEGRO_BITMAP*metrologo; // l'image
@@ -159,7 +157,7 @@ void drawmetrologo(station *_station1){
 
 ///--------------------------------------------///
 
-void drawScheldures(){
+void drawSchedules(){
 
     station  _station = creatStation();
 
@@ -309,6 +307,8 @@ void drawPrimaryPage(){
 
     al_draw_filled_rectangle(121,341, 1827, 350, primary_blue); // blue line
 
+
+
     al_draw_filled_rounded_rectangle(20,957, 129, 1066, 30, 30, primary_grey); // add rectangle
     al_draw_filled_rounded_rectangle(35,1007, 114, 1016, 2, 2, primary_blue); // line1
     al_draw_filled_rounded_rectangle(70,972, 79, 1051, 2, 2,  primary_blue); // line2
@@ -318,7 +318,6 @@ void drawPrimaryPage(){
     al_draw_filled_rounded_rectangle(908,979, 987, 988, 2, 2, primary_blue); // line1
     al_draw_filled_rounded_rectangle(908,1007, 987, 1016, 2, 2,  primary_blue); // line2
     al_draw_filled_rounded_rectangle(908,1035, 987, 1044, 2, 2,  primary_blue); // line3
-
 
     al_draw_filled_rounded_rectangle(1777,957, 1886, 1066, 30, 30, primary_grey); // favourite rectangle
     heart = al_load_bitmap("../Ressources/images/heart.png"); // heart image
@@ -331,7 +330,7 @@ void drawPrimaryPage(){
     RATP = al_load_bitmap("../Ressources/images/RATP.png"); // logo RATP
     al_draw_bitmap(RATP,1727,820,0);
 
-    drawScheldures();
+    drawSchedules();
     drawnextStationName();
     drawNextMetroLogo(determineLine());
 
@@ -366,7 +365,7 @@ void changeDirection(station * _station) {
         }
     }
     al_flip_display();
-    drawScheldures();
+    drawSchedules();
     al_flip_display();
 }
 
@@ -417,7 +416,7 @@ void changeMetro(){
 
     drawnextStationName();
     drawNextMetroLogo(data);
-    drawScheldures();
+    drawSchedules();
 
 
     al_flip_display();

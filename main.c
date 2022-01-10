@@ -78,18 +78,45 @@ int main(int argc, char *argv[])
         printf("Audio clip sample not loaded!\n");
         return -1;
     }
-
-
-    //  al_play_sample(sample, 1.0, 0.0, 1.0, ALLEGRO_PLAYMODE_ONCE, 0);
+    al_play_sample(sample, 1.0, 0.0, 1.0, ALLEGRO_PLAYMODE_ONCE, 0);
 
     //
     // End Audio
     //
 
+    //
+    // READ CONFIG FILE FOR REFRESH TIME
+    //
+
+        FILE * configFile = fopen("../config.txt", "r");
+        char data[255];
+        char Refreshtimekey[255];
+        int refreshtime = 0;
+        if(configFile == NULL){
+            printf("File not open");
+        }else
+        {
+            while(fscanf(configFile,"%s %s",Refreshtimekey, data) != EOF){
+
+                if(strcmp( Refreshtimekey, "RefreshRate" ) == 0){
+                    refreshtime = atoi(data);
+                }
+            }
+        }
+        fclose(configFile);
+
+
+    //
+    //
+    //
+
+
+
+
 
     ///-------------------- RUNNING APP LOOP -----------------------///
 
-    while(!fin){
+    while(!fin) {
 
         //
         // GET REAL TIME AND REDRAWING IT
@@ -102,15 +129,19 @@ int main(int argc, char *argv[])
         int tmp;
         int tmp2;
 
-        if(sec >= tmp2+5){
-            printf("plus de 5 second sont passé");
-            al_flip_display();
-            drawScheldures();
-            al_flip_display();
-            tmp = tm_struct->tm_min;
-            tmp2 = tm_struct->tm_sec;
-        }
 
+        if (refreshtime == 0) {
+            // if 0 then refresh is off
+        } else {
+            if (sec >= tmp2 + refreshtime) {
+                printf("refresh screen");
+                al_flip_display();
+                drawSchedules();
+                al_flip_display();
+                tmp = tm_struct->tm_min;
+                tmp2 = tm_struct->tm_sec;
+            }
+        }
 
         if(tmp != minute){
             printf("changement minute");
@@ -145,7 +176,7 @@ int main(int argc, char *argv[])
             changeMetro();
         }
 
-        if(20 < mouse.x && mouse.x < 129 && 957<mouse.y && mouse.y <1066 && mouse.buttons &1 ){ // clic on add rectangle ?
+       /* if(20 < mouse.x && mouse.x < 129 && 957<mouse.y && mouse.y <1066 && mouse.buttons &1 ){ // clic on add rectangle ?
             printf("add button pressed");
             fin=1;
         }
@@ -158,7 +189,7 @@ int main(int argc, char *argv[])
         if(1777 < mouse.x && mouse.x < 1886 && 957<mouse.y && mouse.y <1066 && mouse.buttons &1 ){ // clic on fav rectangle ?
             printf("fav button pressed");
             fin=1;
-        }
+        } */
 
     };
 

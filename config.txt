@@ -1,7 +1,7 @@
 [SCREEN SETTINGS]
-RefreshRate 5
+RefreshRate 30
 FirstStartup 1
 
 [DEFAULT STATION]
-Line 6  Direction A
-station nation~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Line 13 Direction R
+station chatillon+montrouge~~~~~~~~~~~~~~~~~~~~~~~~~~
