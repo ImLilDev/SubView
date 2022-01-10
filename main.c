@@ -158,6 +158,14 @@ int main(int argc, char *argv[])
 
         // si touche [Echap] appuyée fin boucle et quitter
         if(al_key_down(&key,ALLEGRO_KEY_ESCAPE)){
+
+            ALLEGRO_SAMPLE *sample = al_load_sample("../Ressources/audio/close.ogg");
+            al_reserve_samples(1);
+            if (!sample){
+                printf("Audio clip sample not loaded!\n");
+                return -1;
+            }
+            al_play_sample(sample, 1.0, 0.0, 1.0, ALLEGRO_PLAYMODE_ONCE, 0);
             printf("esc key pressed");
             fin=1;
         }
@@ -204,6 +212,13 @@ int main(int argc, char *argv[])
         }*/
 
         if(1777 < mouse.x && mouse.x < 1886 && 957<mouse.y && mouse.y <1066 && mouse.buttons &1 ){ // clic on fav rectangle ?
+            ALLEGRO_SAMPLE *sample = al_load_sample("../Ressources/audio/clic.ogg");
+            al_reserve_samples(1);
+            if (!sample){
+                printf("Audio clip sample not loaded!\n");
+                return -1;
+            }
+            al_play_sample(sample, 1.0, 0.0, 1.0, ALLEGRO_PLAYMODE_ONCE, 0);
             printf("fav button pressed");
             system("open https://github.com/ImLilDev/SubView");
 

@@ -1,7 +1,7 @@
 [SCREEN SETTINGS]
 RefreshRate 30
-FirstStartup 1
+FirstStartup 0
 
 [DEFAULT STATION]
 Line 1  Direction R
-station chateau+de+vincennes~~~~~~~~~~~~~~~~~~~~~~~~~
+station nation
