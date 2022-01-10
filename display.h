@@ -141,8 +141,8 @@ void drawNextMetroLogo(int number){
 
 void drawmetrologo(station *_station1){
 
-    ALLEGRO_BITMAP*metrologo; // l'image
-    // charger une image dans le programme
+    ALLEGRO_BITMAP*metrologo; // image
+    // change an image on the code
 
     char path[255];
     sprintf(path, "../Ressources/images/%d.png", _station1->metroNumber);
@@ -150,7 +150,7 @@ void drawmetrologo(station *_station1){
     metrologo = al_load_bitmap(path);
     if(!metrologo)
         Error("al_load_bitmap()");
-    // puis l'afficher
+    // then display it
     al_draw_bitmap(metrologo,120,86,0);
 
 }
@@ -367,6 +367,7 @@ void changeDirection(station * _station) {
     al_flip_display();
     drawSchedules();
     al_flip_display();
+
 }
 
 ///--------------------------------------------///

@@ -15,6 +15,17 @@
 #include "display.h"
 #include "list.h"
 
+///------------------------ Developers -----------------------//
+/*
+    code created by :
+
+    Mathieu Dubois @ImLilDev on gitHub
+
+    Eliott Germain @ESPEDUZA on gitHub
+
+
+                                                            */
+
 int main(int argc, char *argv[])
 {
 
@@ -167,6 +178,7 @@ int main(int argc, char *argv[])
             }
             al_play_sample(sample, 1.0, 0.0, 1.0, ALLEGRO_PLAYMODE_ONCE, 0);
             printf("esc key pressed");
+            al_rest(0.45);
             fin=1;
         }
 
