@@ -1,42 +1,38 @@
 //
 // Created by Eliott GERMAIN on 10/01/2022.
 //
-
-
 #ifndef SUBVIEW_DISPLAY_H
 #define SUBVIEW_DISPLAY_H
 
-
-
 ///---------------- PROTOTYPES ---------------///
 
-void erreur(const char*);
+void Error(const char*);
 
 void drawTrainTime(int , float, float, float, float, float, float);
 
 void drawNextMetroLogo(int);
 
-void drawmetrologo(station *);
+//void drawmetrologo(station *);
 
-void drawscheldures();
+void drawScheldures();
 
-void drawtime();
+void drawTime();
 
 void firstStartup();
 
-void drawprimarypage();
+void drawPrimaryPage();
 
-void changedirection(station *);
+void changeDirection(station *);
 
-void changemetro();
+void changeMetro();
 
-///---------------- FUNCTIONS ----------------///
+///----------------- FUNCTIONS ----------------///
 
-void erreur(const char*txt)
+void Error(const char*txt)
 {
     ALLEGRO_DISPLAY*d;
     d=al_is_system_installed()?al_get_current_display():NULL;
-    al_show_native_message_box(d,"ERREUR",txt,NULL,NULL,0);
+    al_show_native_message_box(d,"ERROR : ",txt,NULL,NULL,0);
     exit(EXIT_FAILURE);
 }
 
@@ -88,7 +84,7 @@ void drawNextMetroLogo(int number){
 
     metrologo = al_load_bitmap(path);
     if(!metrologo)
-        erreur("al_load_bitmap()");
+        Error("al_load_bitmap()");
     // puis l'afficher
     al_draw_filled_rectangle(60,59,548,320,primary_grey);
 
@@ -155,7 +151,7 @@ void drawmetrologo(station *_station1){
 
     metrologo = al_load_bitmap(path);
     if(!metrologo)
-        erreur("al_load_bitmap()");
+        Error("al_load_bitmap()");
     // puis l'afficher
     al_draw_bitmap(metrologo,120,86,0);
 
@@ -163,7 +159,7 @@ void drawmetrologo(station *_station1){
 
 ///--------------------------------------------///
 
-void drawscheldures(){
+void drawScheldures(){
 
     station  _station = creatStation();
 
@@ -195,7 +191,7 @@ void drawscheldures(){
 
 ///--------------------------------------------///
 
-void drawtime(){
+void drawTime(){
 
 
     time_t now = time(NULL);
@@ -241,7 +237,7 @@ void firstStartup() {
 
                     overlay = al_load_bitmap("../Ressources/images/overlay.png");
                     if(!overlay)
-                        erreur("al_load_bitmap()");
+                        Error("al_load_bitmap()");
                     al_draw_bitmap(overlay,0,0,0);
 
                     al_flip_display();
@@ -249,10 +245,10 @@ void firstStartup() {
 
                     while(!fin) {
 
-                        // récupération de l'état du clavier
+                        // recuperation of keyboard state
                         al_get_keyboard_state(&key);
 
-                        // si touche [Echap] appuyée fin boucle et quitter
+                        // if [Escape] pressed, end of the loop and quit the program
                         if (al_key_down(&key, ALLEGRO_KEY_SPACE)) {
                             fseek(configFile, -1, SEEK_CUR);
                             fputc('1', configFile);
@@ -271,7 +267,7 @@ void firstStartup() {
 
 ///--------------------------------------------///
 
-void drawprimarypage(){
+void drawPrimaryPage(){
 
 
     time_t now = time(NULL);
@@ -308,7 +304,7 @@ void drawprimarypage(){
 //    al_draw_text(Parisine_font_medium, al_map_rgb(22,75,156), 598,125,0, station); // station name
 
 
-    drawtime();
+    drawTime();
 
 
     al_draw_filled_rectangle(121,341, 1827, 350, primary_blue); // blue line
@@ -335,7 +331,7 @@ void drawprimarypage(){
     RATP = al_load_bitmap("../Ressources/images/RATP.png"); // logo RATP
     al_draw_bitmap(RATP,1727,820,0);
 
-    drawscheldures();
+    drawScheldures();
     drawnextStationName();
     drawNextMetroLogo(determineLine());
 
@@ -345,7 +341,7 @@ void drawprimarypage(){
 
 ///--------------------------------------------///
 
-void changedirection(station * _station) {
+void changeDirection(station * _station) {
 
     FILE *configFile = fopen("../config.txt", "r+");
     char data[255];
@@ -370,13 +366,13 @@ void changedirection(station * _station) {
         }
     }
     al_flip_display();
-    drawscheldures();
+    drawScheldures();
     al_flip_display();
 }
 
 ///--------------------------------------------///
 
-void changemetro(){
+void changeMetro(){
 
     FILE *configFile = fopen("../config.txt", "r+");
     int data= 0;
@@ -421,7 +417,7 @@ void changemetro(){
 
     drawnextStationName();
     drawNextMetroLogo(data);
-    drawscheldures();
+    drawScheldures();
 
 
     al_flip_display();

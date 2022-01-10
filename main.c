@@ -45,28 +45,28 @@ int main(int argc, char *argv[])
     }
 
     if(!al_init_primitives_addon())
-        erreur("al_init_primitives_addon()");
+        Error("al_init_primitives_addon()");
 
-    //nécessaire pour load et save bitmap
+    //necessary to load and save bitmap
     if(!al_init_image_addon())
-        erreur("al_init_image_addon()");
+        Error("al_init_image_addon()");
 
     if (!al_install_audio())
-        erreur("al_install_audio()");
+        Error("al_install_audio()");
 
-    // pour utiliser le clavier
+    // to use keyboard
     if(!al_install_keyboard())
-        erreur("al_install_keyboard()");
+        Error("al_install_keyboard()");
 
     // mouse check
     if(!al_install_mouse())
-        erreur("al_install_mouse()");
+        Error("al_install_mouse()");
 
     // End checking
 
 
     firstStartup();
-    drawprimarypage();
+    drawPrimaryPage();
 
     //
     // Audio
@@ -105,7 +105,7 @@ int main(int argc, char *argv[])
         if(sec >= tmp2+5){
             printf("plus de 5 second sont passé");
             al_flip_display();
-            drawscheldures();
+            drawScheldures();
             al_flip_display();
             tmp = tm_struct->tm_min;
             tmp2 = tm_struct->tm_sec;
@@ -115,7 +115,7 @@ int main(int argc, char *argv[])
         if(tmp != minute){
             printf("changement minute");
             al_flip_display();
-            drawtime();
+            drawTime();
             al_flip_display();
             tmp = tm_struct->tm_min;
             tmp2 = tm_struct->tm_sec;
@@ -136,13 +136,13 @@ int main(int argc, char *argv[])
 
         if(88 < mouse.x && mouse.x < 1063 && 386<mouse.y && mouse.y <599 && mouse.buttons &1 ){ // clic on direction text
             al_rest(0.1);
-            changedirection(&station1);
+            changeDirection(&station1);
         }
 
         if(120 < mouse.x && mouse.x < 509 && 86<mouse.y && mouse.y <277 && mouse.buttons &1 ){ // clic on metro logo
             printf("clic on metro logo");
             al_rest(0.1);
-            changemetro();
+            changeMetro();
         }
 
         if(20 < mouse.x && mouse.x < 129 && 957<mouse.y && mouse.y <1066 && mouse.buttons &1 ){ // clic on add rectangle ?

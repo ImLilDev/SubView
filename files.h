@@ -13,21 +13,23 @@
 
 ///---------------- PROTOTYPES ----------------///
 
-void formatFile(char *);
+void formatFile(char *);                       // formatting file to use it with json-c
 
-void suppr(char *);
+void suppr(char *);                            // suppression of a section of the file to get the next key
 
-int recupTime(FILE* fp);
+int recupTime(FILE* fp);                       // getting time of the next train with key "message"
 
-const char * getDestination(FILE*);
+const char * getDestination(FILE*);            // getting the destination in "config.txt"
 
-void changeStationName(char[255]);
+void changeStationName(char[255]);             // changing the station name in "config.txt"
 
-void readConfigFile(station * );
+void readConfigFile(station * );                // get values to station attributes from "config.txt"
 
-void drawnextStationName();
+void drawnextStationName();                    // drawing the next station by getting information from "config.txt" and the by the API
 
-int determineLine();
+station creatStation();                        // create a station from "result.json" (API)
+
+int determineLine();                           // getting line number from "config.txt"
 
 ///---------------- FUNCTIONS -----------------///
 
@@ -128,6 +130,8 @@ const char * getDestination(FILE* fp){
     printf("%s\n", json_object_get_string(destination));
     destinationTrain = json_object_get_string(destination);
 
+    ///----------- shorten stations names to fit the display -----------///
+
     if(strcmp(destinationTrain, "La Defense (Grande Arche)") == 0){
         destinationTrain = "La Defense";
     }
@@ -191,6 +195,10 @@ const char * getDestination(FILE* fp){
     }
     if(strcmp(destinationTrain, "Gallieni (Parc de Bagnolet)") == 0){
         destinationTrain = "Gallieni (Parc)";
+    }
+
+    if(strcmp(destinationTrain, "Saint-Denis-Universite") == 0){
+        destinationTrain = "Saint-Denis-U";
     }
 
 
@@ -383,6 +391,7 @@ void drawnextStationName(){
     if(strcmp(Displayname, "Mairie de Saint-Ouen") == 0){
         strcpy(Displayname, "M. de Saint-Ouen");
     }
+
 
     al_draw_filled_rectangle(582,102, 1482, 266, primary_grey); // blue line
     al_draw_text(Parisine_font_medium, al_map_rgb(22,75,156), 598, 125, 0, Displayname);
