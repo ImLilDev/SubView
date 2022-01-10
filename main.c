@@ -123,7 +123,6 @@ int main(int argc, char *argv[])
         //
         time_t now = time(NULL);
         struct tm *tm_struct = localtime(&now);
-        int hour = tm_struct->tm_hour;
         int minute = tm_struct->tm_min;
         int sec = tm_struct->tm_sec;
         int tmp;
@@ -161,7 +160,7 @@ int main(int argc, char *argv[])
         if(al_key_down(&key,ALLEGRO_KEY_ESCAPE)){
             printf("esc key pressed");
             fin=1;
-        };
+        }
 
         al_get_mouse_state(&mouse);
 
@@ -176,7 +175,7 @@ int main(int argc, char *argv[])
             changeMetro();
         }
 
-       /* if(20 < mouse.x && mouse.x < 129 && 957<mouse.y && mouse.y <1066 && mouse.buttons &1 ){ // clic on add rectangle ?
+        /*if(20 < mouse.x && mouse.x < 129 && 957<mouse.y && mouse.y <1066 && mouse.buttons &1 ){ // clic on add rectangle ?
             printf("add button pressed");
             fin=1;
         }
@@ -184,12 +183,13 @@ int main(int argc, char *argv[])
         if(893 < mouse.x && mouse.x < 1002 && 957<mouse.y && mouse.y <1066 && mouse.buttons &1 ){ // clic on list rectangle ?
             printf("list button pressed");
             fin=1;
-        }
+        }*/
 
         if(1777 < mouse.x && mouse.x < 1886 && 957<mouse.y && mouse.y <1066 && mouse.buttons &1 ){ // clic on fav rectangle ?
             printf("fav button pressed");
-            fin=1;
-        } */
+            system("open https://github.com/ImLilDev/SubView");
+
+        }
 
     };
 
@@ -197,4 +197,4 @@ int main(int argc, char *argv[])
     al_destroy_display(display);
     return 0;
 
-};
+}

@@ -108,7 +108,7 @@ int recupTime(FILE* fp){
     parsed_json = json_tokener_parse(buffer);
 
     json_object_object_get_ex(parsed_json, "message", &message);
-    printf("Message: %d\n", json_object_get_int(message));
+    //printf("Message: %d\n", json_object_get_int(message));   // debug
     time = json_object_get_int(message);
     return time;
 }
@@ -127,7 +127,7 @@ const char * getDestination(FILE* fp){
     fclose(fp2);
     parsed_json = json_tokener_parse(buffer);
     json_object_object_get_ex(parsed_json, "destination", &destination);
-    printf("%s\n", json_object_get_string(destination));
+    // printf("%s\n", json_object_get_string(destination));
     destinationTrain = json_object_get_string(destination);
 
     ///----------- shorten stations names to fit the display -----------///
@@ -243,7 +243,7 @@ void readConfigFile(station * _station){
 
             if(strcmp( key, "station" ) == 0){
                 strcpy(_station->stationName , data);
-                printf("station name from file : %s\n" ,_station->stationName);
+                //printf("station name from file : %s\n" ,_station->stationName);
             }
             if(strcmp(key, "Direction")==0){
                 strcpy( _station->direction, data);
@@ -252,8 +252,9 @@ void readConfigFile(station * _station){
                 _station->metroNumber = atoi(data);
             }
         }
-        printf("station name from file after while() : %s\n" , _station->stationName );
-        printf("end of file\n");
+        //printf("station name from file after while() : %s\n" , _station->stationName );  /// debug
+        // printf("end of file\n");                                                        /// debug
+
     }
     fclose(configFile);
 }
@@ -358,14 +359,14 @@ void drawnextStationName(){
 
     json_object_object_get_ex(parsed_json, "slug", &slug);
     json_object_object_get_ex(parsed_json, "name", &nameStation);
-    printf("NAME   :   %s\n", json_object_get_string(nameStation));
-    printf("SLUG   :   %s\n", json_object_get_string(slug));
+    printf("Station   :   %s\n", json_object_get_string(nameStation));
+    //printf("SLUG   :   %s\n", json_object_get_string(slug));
     strcpy(name, json_object_get_string(slug));
     strcpy(Displayname, json_object_get_string(nameStation));
 
     changeStationName(name);
-    printf("new name : %s\n" , name);
-    printf("ChangeStationName  à  été  appelée \n");
+    //printf("new name : %s\n" , name);
+    //printf("ChangeStationName  à  été  appelée \n");
 
     if(strcmp(Displayname, "Chateau de Vincennes") == 0){
         strcpy(Displayname, "Ch. de Vincennes");

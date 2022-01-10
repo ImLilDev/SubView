@@ -163,11 +163,11 @@ void drawSchedules(){
 
     ///                   console test                 ///
 
+
     printf("%s %d\n","time1 : ", _station.timeNextTrain1);
     printf("%s %d\n","time2 : ", _station.timeNextTrain2);
     printf("%s %d\n","time3 : ", _station.timeNextTrain3);
     printf("%s %d\n","time4 : ", _station.timeNextTrain4);
-    printf("%s %s\n", "station Name : ", _station.stationName);
     printf("%s %d\n", "Line  : ", _station.metroNumber);
     printf("%s %s\n", "Direction : ", _station.direction);
 
