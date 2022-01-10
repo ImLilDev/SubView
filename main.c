@@ -165,11 +165,29 @@ int main(int argc, char *argv[])
         al_get_mouse_state(&mouse);
 
         if(88 < mouse.x && mouse.x < 1063 && 386<mouse.y && mouse.y <599 && mouse.buttons &1 ){ // clic on direction text
+
+            ALLEGRO_SAMPLE *sample = al_load_sample("../Ressources/audio/clic.ogg");
+            al_reserve_samples(1);
+            if (!sample){
+                printf("Audio clip sample not loaded!\n");
+                return -1;
+            }
+            al_play_sample(sample, 1.0, 0.0, 1.0, ALLEGRO_PLAYMODE_ONCE, 0);
             al_rest(0.1);
             changeDirection(&station1);
         }
 
         if(120 < mouse.x && mouse.x < 509 && 86<mouse.y && mouse.y <277 && mouse.buttons &1 ){ // clic on metro logo
+
+            ALLEGRO_SAMPLE *sample = al_load_sample("../Ressources/audio/clic.ogg");
+            al_reserve_samples(1);
+            if (!sample){
+                printf("Audio clip sample not loaded!\n");
+                return -1;
+            }
+            al_play_sample(sample, 1.0, 0.0, 1.0, ALLEGRO_PLAYMODE_ONCE, 0);
+
+
             printf("clic on metro logo");
             al_rest(0.1);
             changeMetro();

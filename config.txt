@@ -3,5 +3,5 @@ RefreshRate 30
 FirstStartup 1
 
 [DEFAULT STATION]
-Line 7  Direction A
-station la+courneuve+8+mai+1945~~~~~~~~~~~~~~~~~~~~~~
+Line 1  Direction R
+station chateau+de+vincennes~~~~~~~~~~~~~~~~~~~~~~~~~
