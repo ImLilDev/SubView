@@ -492,9 +492,9 @@ int main(int argc, char *argv[])
 
         if(sec >= tmp2+5){
             printf("plus de 5 second sont passé");
-          /*  al_flip_display();
+            al_flip_display();
             drawscheldures();
-            al_flip_display(); */
+            al_flip_display();
             tmp = tm_struct->tm_min;
             tmp2 = tm_struct->tm_sec;
         }

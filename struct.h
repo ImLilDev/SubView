@@ -204,6 +204,9 @@ const char * getDestination(FILE* fp){
     if(strcmp(destinationTrain, "Asnieres-Gennevilliers Les Courtilles") == 0){
         destinationTrain = "Gennevilliers";
     }
+    if(strcmp(destinationTrain, "Gallieni (Parc de Bagnolet)") == 0){
+        destinationTrain = "Gallieni (Parc)";
+    }
 
 
     return destinationTrain;
