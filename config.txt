@@ -1,7 +1,7 @@
 [SCREEN SETTINGS]
 RefreshRate 30
-FirstStartup 1
+FirstStartup 0
 
 [DEFAULT STATION]
-Line 3  Direction R
-station gallieni+(parc+de+bagnolet)~~~~~~~~~~~~~~~~~
+Line 1  Direction A
+station chateau+de+vincennes

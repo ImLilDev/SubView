@@ -22,7 +22,7 @@ Most accurate design yet. we've tried to be as faithful as possible
 
 #### Download the dmg for mac
 
-[SubView Releases](https://github.com/pgrimaud/horaires-ratp-api)
+[SubView Releases](https://github.com/ImLilDev/SubView/releases/tag/v0.0.1-alpha)
 
 ### OR
 
@@ -59,4 +59,3 @@ Try it!
  - [json-c](https://formulae.brew.sh/formula/json-c)
  - [curl](https://formulae.brew.sh/formula/curl)
  - [allegro](https://www.allegro.cc)
-
